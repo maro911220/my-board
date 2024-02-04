@@ -1,0 +1,7 @@
+.header {
+  @apply h-[100px];
+
+  &-con {
+    @apply h-full mx-auto flex justify-between items-center max-w-lg;
+  }
+}
