@@ -1,0 +1,62 @@
+.news {
+  container: news / inline-size;
+  @apply flex flex-1 gap-4 overflow-hidden;
+
+  & > div:first-of-type {
+    @apply pr-4 border-r;
+  }
+
+  &-box {
+    @apply w-[400px] flex flex-col flex-none gap-2 overflow-hidden;
+
+    &-card {
+      @apply flex flex-1 gap-2 overflow-hidden;
+
+      &__img {
+        @apply flex-none w-[200px] h-full rounded object-cover object-top;
+      }
+
+      &__title {
+        @apply flex flex-col justify-between;
+        p {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+        div {
+          @apply flex flex-col items-end text-sm;
+        }
+      }
+    }
+  }
+
+  &-list {
+    @apply flex flex-col flex-1 overflow-auto divide-y;
+    &-item {
+      @apply flex-1;
+
+      &__title {
+        @apply flex h-full gap-2 justify-between items-center;
+        span {
+          &:first-of-type {
+            @apply truncate flex-1;
+          }
+          &:last-of-type {
+            @apply flex-none w-[150px] truncate;
+          }
+        }
+      }
+    }
+  }
+}
+
+@container news (max-width: 640px) {
+  .news-box {
+    @apply hidden;
+  }
+
+  .news-list {
+    @apply text-sm;
+  }
+}

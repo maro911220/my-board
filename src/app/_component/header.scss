@@ -1,7 +1,27 @@
 .header {
-  @apply h-[100px];
+  @apply sticky top-0 h-[80px] z-10 bg-white dark:bg-stone-900 backdrop-blur;
 
   &-con {
-    @apply h-full mx-auto flex justify-between items-center max-w-lg;
+    @apply max-w-lg h-full mx-auto p-lg flex justify-between items-center;
+  }
+
+  &-title,
+  &-date {
+    @apply text-2xl leading-tight tracking-tighter;
+  }
+
+  &-title::first-letter {
+    @apply text-primary;
+  }
+
+  &-date {
+    @apply font-bold;
+  }
+
+  &-btn {
+    @apply flex gap-2;
+    button {
+      @apply w-[42px] h-[42px] flex items-center justify-center rounded-full border border-stone-900;
+    }
   }
 }

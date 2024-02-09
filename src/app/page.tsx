@@ -1,93 +1,61 @@
 "use client";
-import Card from "./_component/Card";
+import "./main.scss";
+import Item from "./_component/Item";
+import News from "./_component/news/page";
 import { useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
 import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export default function Dnd() {
-  //로컬스토리지 저장본이 있다면 불러오고 없다면 기본리스트로 생성
-  const { edit, setEdit, list, setList } = useStore(defaultStore);
+// 쿼리 클라이언트 생성
+const queryClient = new QueryClient();
 
-  useEffect(() => {
-    const defualtCardList = [{ id: 0 }, { id: 1 }, { id: 2 }];
-    const localItem = localStorage.getItem("dndLayouts");
-    setList(localItem ? JSON.parse(localItem) : defualtCardList);
+// 컴포넌트 선언
+export default function Page() {
+  // Zustand를 사용하여 상태 및 액션을 가져오기
+  const { edit, list, setLayout, setDefaultList } = useStore(defaultStore);
+  useEffect(() => setDefaultList(), [setDefaultList]);
+
+  // 아이템을 렌더링하는 콜백 함수 정의
+  const renderItem = useCallback((item: { id: number }, index: number) => {
+    const components = [
+      <News key="1" />,
+      <p key="2">component2</p>,
+      <p key="3">component3</p>,
+      <p key="4">component4</p>,
+      <p key="5">component5</p>,
+      <p key="6">component6</p>,
+    ];
+
+    return (
+      <Item key={item.id} index={index} id={item.id}>
+        {components[item.id]}
+      </Item>
+    );
   }, []);
 
-  // 아이템(카드) 드래그시 배열 변경 함수, 변경에 immutability-helper 사용
-  const moveItem = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      const act = () => {
-        const newCards = [...list];
-        const draggedCard = newCards[dragIndex];
-        newCards.splice(dragIndex, 1);
-        newCards.splice(hoverIndex, 0, draggedCard);
-        return newCards;
-      };
-      setList(act());
-    },
-    [list]
-  );
-
-  // 아이템(카드) 재사용을 위한 useCallback
-  const renderCard = useCallback(
-    (card: { id: number }, index: number) => {
-      const components = [
-        <p key="1">component1</p>,
-        <p key="2">component2</p>,
-        <p key="3">component3</p>,
-      ];
-
-      return (
-        <Card
-          key={card.id}
-          index={index}
-          id={card.id}
-          edit={edit}
-          moveItem={moveItem}
-        >
-          {components[card.id]}
-        </Card>
-      );
-    },
-    [moveItem, edit]
-  );
-
-  // 편집모드
-  const editMode = () => {
-    setEdit(true);
-  };
-
-  const saveLayout = () => {
-    setEdit(false);
-    localStorage.setItem("dndLayouts", JSON.stringify(list));
-  };
-
+  // JSX 반환
   return (
-    <main>
-      <DndProvider options={HTML5toTouch}>
-        <div className="react-dnd-con">
-          {list.map((item, index) => {
-            return renderCard(item, index);
-          })}
-        </div>
-      </DndProvider>
-      <button
-        onClick={() => {
-          editMode();
-        }}
-      >
-        edit
-      </button>
-      <button
-        onClick={() => {
-          saveLayout();
-        }}
-      >
-        save
-      </button>
+    <main className="main">
+      <h1 className="hidden">Main</h1>
+      {/* React Query */}
+      <QueryClientProvider client={queryClient}>
+        {/* React Dnd Provider */}
+        <DndProvider options={HTML5toTouch}>
+          <section className="list-grid">
+            <h2 className="hidden">Main-Layout</h2>
+            {list.map((item, index) => renderItem(item, index))}
+          </section>
+        </DndProvider>
+      </QueryClientProvider>
+      {/* 편집 모드일 때 레이아웃 저장 버튼 표시 */}
+      {edit && (
+        <button className="list-save" onClick={() => setLayout(list)}>
+          레이아웃 저장
+        </button>
+      )}
     </main>
   );
 }
