@@ -1,6 +1,7 @@
 "use client";
 import "./main.scss";
 import Item from "./_component/Item";
+import Ani from "./_component/ani/page";
 import News from "./_component/news/page";
 import { useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
@@ -22,7 +23,7 @@ export default function Page() {
   const renderItem = useCallback((item: { id: number }, index: number) => {
     const components = [
       <News key="1" />,
-      <p key="2">component2</p>,
+      <Ani key="2" />,
       <p key="3">component3</p>,
       <p key="4">component4</p>,
       <p key="5">component5</p>,

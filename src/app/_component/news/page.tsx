@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function News() {
   const { isPending, error, data, isFetching } = useQuery({
-    queryKey: ["repoData"],
+    queryKey: ["news"],
     queryFn: () =>
       axios
         .get(
@@ -48,9 +48,9 @@ function Card(news: any) {
         src={news.news.urlToImage}
       />
       <div className="news-box-card__title">
-        <p>{news.news.title.split("-")[0]}</p>
+        <p>{news.news.title.split("- ")[0]}</p>
         <div>
-          <span>{news.news.title.split("-")[1]}</span>
+          <span>{news.news.title.split("- ")[1]}</span>
           <span>{news.news.publishedAt.split("T")[0]}</span>
         </div>
       </div>
@@ -62,8 +62,8 @@ function List(news: any) {
   return (
     <a href={news.news.url} target="_blank" className="news-list-item">
       <p className="news-list-item__title">
-        <span>{news.news.title.split("-")[0]}</span>
-        <span>{news.news.title.split("-")[1]}</span>
+        <span>{news.news.title.split("- ")[0]}</span>
+        <span>{news.news.title.split("- ")[1]}</span>
       </p>
     </a>
   );
