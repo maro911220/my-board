@@ -15,10 +15,22 @@
     &-card {
       @apply col-span-1 row-span-2 flex-1 flex-col;
 
+      &:hover {
+        .ani-box-card__img {
+          img {
+            @apply scale-105;
+          }
+        }
+
+        p {
+          @apply underline;
+        }
+      }
+
       &__img {
-        @apply h-[calc(100%-40px)];
+        @apply h-[calc(100%-40px)] overflow-hidden border rounded;
         img {
-          @apply w-full h-full border rounded object-cover;
+          @apply w-full h-full object-cover transition;
         }
       }
 
@@ -38,7 +50,7 @@
     }
 
     &-item {
-      @apply flex-1 text-sm;
+      @apply px-1 flex-1 text-sm bg-list hover:bg-listHover hover:dark:bg-listHoverDark;
 
       &__title {
         @apply h-full gap-2 justify-between items-center truncate;

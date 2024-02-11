@@ -42,11 +42,10 @@ export default function News() {
 function Card(news: any) {
   return (
     <a href={news.news.url} target="_blank" className="news-box-card">
-      <img
-        className="news-box-card__img"
-        alt={news.news.title}
-        src={news.news.urlToImage}
-      />
+      <div className="news-box-card__img">
+        <img alt={news.news.title} src={news.news.urlToImage} />
+      </div>
+
       <div className="news-box-card__title">
         <p>{news.news.title.split("- ")[0]}</p>
         <div>

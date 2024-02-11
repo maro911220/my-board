@@ -6,7 +6,7 @@
   @apply grid grid-cols-12 grid-rows-12 gap-[20px] h-[1480px];
 
   &-item {
-    @apply flex flex-col p-lg rounded border bg-white dark:bg-stone-800 overflow-hidden;
+    @apply flex flex-col p-lg rounded border bg-white dark:border-transparent dark:bg-stone-800 overflow-hidden;
     &:nth-of-type(1) {
       @apply col-span-12 row-span-3;
     }

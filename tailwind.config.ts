@@ -27,6 +27,11 @@ const config: Config = {
           DEFAULT: "#5D5AFF",
         },
       },
+      backgroundColor: {
+        list: "transparent",
+        listHover: "#efefef",
+        listHoverDark: "#111",
+      },
     },
   },
   plugins: [],

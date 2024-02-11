@@ -21,7 +21,7 @@
   &-btn {
     @apply flex gap-2;
     button {
-      @apply w-[42px] h-[42px] flex items-center justify-center rounded-full border border-stone-900;
+      @apply w-[42px] h-[42px] flex items-center justify-center rounded-full border border-stone-900 dark:border-stone-400;
     }
   }
 }

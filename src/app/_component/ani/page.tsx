@@ -2,13 +2,16 @@
 "use client";
 import "./ani.scss";
 import axios from "axios";
-import { useQuery, useQueries } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import { useQueries } from "@tanstack/react-query";
 
 export default function Ani() {
+  const today = dayjs().locale("en").format("ddd");
   const ids = [
     "https://api.jikan.moe/v4/seasons/now?limit=4",
-    "https://api.jikan.moe/v4/schedules?filter=sunday",
+    `https://api.jikan.moe/v4/schedules?filter=${today}day`,
   ];
+
   const results = useQueries({
     queries: ids.map((id) => ({
       queryKey: ["anime", id],
@@ -31,13 +34,12 @@ export default function Ani() {
           <p className="font-semibold mb-1">New</p>
           <div className="ani-box-con">
             {aniList.data.map((anis: any, index: number) => {
-              console.log(anis);
               return index < 8 && <Card key={index} anis={anis} />;
             })}
           </div>
         </div>
         <div className="ani-list">
-          <p className="font-semibold mb-1">Schedule</p>
+          <p className="font-semibold mb-1">Today Schedule</p>
           <div className="ani-list-con">
             {aniSchedule.data.map((schedule: any, index: number) => {
               return <Schedule key={index} schedule={schedule} />;
@@ -50,7 +52,6 @@ export default function Ani() {
 }
 
 function Card(anis: any) {
-  console.log(anis);
   return (
     <a href={anis.anis.url} target="_blank" className="ani-box-card">
       <div className="ani-box-card__img">

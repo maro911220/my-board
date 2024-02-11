@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/app/_component/Header";
-import "./globals.css";
+import "./globals.scss";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const themeInitializerScript = `
   (function () {
-    window.localStorage.getItem("theme") == 'light'? document.documentElement.classList = 'light' : document.body.classList = "dark"
+    window.localStorage.getItem("theme") == 'light'? document.documentElement.classList = 'light' : document.documentElement.classList = "dark"
   })();
 `;
 
