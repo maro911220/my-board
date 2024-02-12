@@ -39,30 +39,30 @@ export default function News() {
   );
 }
 
-function Card(news: any) {
+function Card({ news }: { news: any }) {
   return (
-    <a href={news.news.url} target="_blank" className="news-box-card">
+    <a href={news.url} target="_blank" className="news-box-card">
       <div className="news-box-card__img">
-        <img alt={news.news.title} src={news.news.urlToImage} />
+        <img alt={news.title} src={news.urlToImage} />
       </div>
 
       <div className="news-box-card__title">
-        <p>{news.news.title.split("- ")[0]}</p>
+        <p>{news.title.split("- ")[0]}</p>
         <div>
-          <span>{news.news.title.split("- ")[1]}</span>
-          <span>{news.news.publishedAt.split("T")[0]}</span>
+          <span>{news.title.split("- ")[1]}</span>
+          <span>{news.publishedAt.split("T")[0]}</span>
         </div>
       </div>
     </a>
   );
 }
 
-function List(news: any) {
+function List({ news }: { news: any }) {
   return (
-    <a href={news.news.url} target="_blank" className="news-list-item">
+    <a href={news.url} target="_blank" className="news-list-item">
       <p className="news-list-item__title">
-        <span>{news.news.title.split("- ")[0]}</span>
-        <span>{news.news.title.split("- ")[1]}</span>
+        <span>{news.title.split("- ")[0]}</span>
+        <span>{news.title.split("- ")[1]}</span>
       </p>
     </a>
   );

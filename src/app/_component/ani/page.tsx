@@ -51,21 +51,21 @@ export default function Ani() {
   );
 }
 
-function Card(anis: any) {
+function Card({ anis }: { anis: any }) {
   return (
-    <a href={anis.anis.url} target="_blank" className="ani-box-card">
+    <a href={anis.url} target="_blank" className="ani-box-card">
       <div className="ani-box-card__img">
-        <img src={anis.anis.images.webp.image_url} alt={anis.anis.title} />
+        <img src={anis.images.webp.image_url} alt={anis.title} />
       </div>
-      <p>{anis.anis.title}</p>
+      <p>{anis.title}</p>
     </a>
   );
 }
 
-function Schedule(schedule: any) {
+function Schedule({ schedule }: { schedule: any }) {
   return (
-    <a href={schedule.schedule.url} target="_blank" className="ani-list-item">
-      <p className="ani-list-item__title">{schedule.schedule.title}</p>
+    <a href={schedule.url} target="_blank" className="ani-list-item">
+      <p className="ani-list-item__title">{schedule.title}</p>
     </a>
   );
 }
