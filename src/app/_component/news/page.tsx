@@ -5,12 +5,13 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 export default function News() {
+  const API_KEY = process.env.NEWS;
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ["news"],
     queryFn: () =>
       axios
         .get(
-          "https://newsapi.org/v2/top-headlines?country=kr&apiKey=67f16fb64c9b415dacdf676a6f0139e9"
+          `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`
         )
         .then((res) => res.data),
   });
