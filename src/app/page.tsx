@@ -2,7 +2,6 @@
 import "./main.scss";
 import Item from "./_component/Item";
 import Ani from "./_component/ani/page";
-import News from "./_component/news/page";
 import Weather from "./_component/weather/page";
 import { useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
@@ -23,9 +22,9 @@ export default function Page() {
   // 아이템을 렌더링하는 콜백 함수 정의
   const renderItem = useCallback((item: { id: number }, index: number) => {
     const components = [
-      <News key="1" />,
-      <Ani key="2" />,
-      <Weather key="3" />,
+      <Ani key="1" />,
+      <Weather key="2" />,
+      <p key="3">component3</p>,
       <p key="4">component4</p>,
       <p key="5">component5</p>,
       <p key="6">component6</p>,
