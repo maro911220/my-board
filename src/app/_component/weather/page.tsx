@@ -62,22 +62,43 @@ function Days({
 }) {
   const dayItem = weatherDay.daily[0];
   const weatherDatas = weatherData[dayItem.weather[0].main];
+  console.log(weatherTime);
   return (
-    <div>
-      <img
-        width={40}
-        src={`/img/weather/${weatherDatas.icon}.png`}
-        alt={weatherDatas.name}
-      />
-      <p>날씨 {weatherDatas.name}</p>
-      <p>평균 {parseFloat(dayItem.temp.day).toFixed(1)}°</p>
-      <p>최저 {parseFloat(dayItem.temp.min).toFixed(1)}°</p>
-      <p>최고 {parseFloat(dayItem.temp.max).toFixed(1)}°</p>
-      <p>
-        강수량
-        {dayItem.rain == null ? 0 : parseFloat(dayItem.rain).toFixed(0)}
-        mm
-      </p>
+    <div className="weather">
+      <div className="weather-today">
+        <div className="weather-today-top">
+          <img
+            className="weather-today-top__img"
+            src={`/img/weather/${weatherDatas.icon}.png`}
+            alt={weatherDatas.name}
+          />
+          <div className="weather-today-top__text">
+            <p>{parseFloat(dayItem.temp.day).toFixed(1)}°</p>
+            <p>{weatherDatas.name}</p>
+          </div>
+        </div>
+        <div className="weather-today-middle">
+          <p>
+            최저 <span>{parseFloat(dayItem.temp.min).toFixed(1)}°</span>
+          </p>
+          <p>
+            최고 <span>{parseFloat(dayItem.temp.max).toFixed(1)}°</span>
+          </p>
+        </div>
+        <p className="weather-today-bottom">
+          강수
+          <span>
+            {dayItem.rain == null ? 0 : parseFloat(dayItem.rain).toFixed(0)}mm
+          </span>
+        </p>
+      </div>
+      <div className="weather-time">
+        {weatherTime.list.map((item: any, index: number) => {
+          return (
+            index >= 3 && index < 8 && <div key={index}>{item.dt_txt}</div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -50,10 +50,10 @@
     }
 
     &-item {
-      @apply px-1 flex-1 text-sm bg-list hover:bg-listHover hover:dark:bg-listHoverDark;
+      @apply px-1 flex items-center flex-1 text-sm bg-list hover:bg-listHover hover:dark:bg-listHoverDark;
 
       &__title {
-        @apply h-full gap-2 justify-between items-center truncate;
+        @apply h-auto truncate;
       }
     }
   }

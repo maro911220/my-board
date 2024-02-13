@@ -6,10 +6,11 @@ import dayjs from "dayjs";
 import { useQueries } from "@tanstack/react-query";
 
 export default function Ani() {
-  const today = dayjs().locale("en").format("ddd");
+  const today = dayjs().locale("en").format("dddd");
+  console.log(today);
   const ids = [
     "https://api.jikan.moe/v4/seasons/now?limit=4",
-    `https://api.jikan.moe/v4/schedules?filter=${today}day`,
+    `https://api.jikan.moe/v4/schedules?filter=${today}`,
   ];
 
   const results = useQueries({
