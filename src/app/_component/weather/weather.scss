@@ -60,7 +60,7 @@
       @apply overflow-hidden;
     }
     &__icon {
-      @apply flex flex-none w-full pl-7 pr-1 justify-between;
+      @apply flex flex-none w-full pl-5 pr-1 justify-between;
     }
   }
 
@@ -86,7 +86,7 @@
           }
         }
         &:last-of-type {
-          @apply text-right;
+          @apply text-left;
           span {
             @apply font-semibold text-red-500;
           }
@@ -110,14 +110,11 @@
     }
     &-temp {
       @apply gap-2;
-      p {
-        @apply w-[60px];
-      }
     }
   }
 }
 
-@container weather (max-width: 680px) {
+@container weather (max-width: 700px) {
   .weather-today {
     @apply w-full;
   }
