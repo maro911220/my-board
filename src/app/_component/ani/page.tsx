@@ -32,7 +32,7 @@ export default function Ani() {
       <h3 className="text-xl font-bold uppercase leading-4 mb-4">Ani</h3>
       <div className="ani">
         <div className="ani-box">
-          <p className="font-semibold mb-1">New</p>
+          <p className="font-semibold mb-1">신작</p>
           <div className="ani-box-con">
             {aniList.data.map((anis: any, index: number) => {
               return index < 8 && <Card key={index} anis={anis} />;
@@ -40,7 +40,7 @@ export default function Ani() {
           </div>
         </div>
         <div className="ani-list">
-          <p className="font-semibold mb-1">Today Schedule</p>
+          <p className="font-semibold mb-1">오늘 방영</p>
           <div className="ani-list-con">
             {aniSchedule.data.map((schedule: any, index: number) => {
               return <Schedule key={index} schedule={schedule} />;

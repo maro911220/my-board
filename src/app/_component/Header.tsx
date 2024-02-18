@@ -6,23 +6,24 @@ import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
 import isLeapYear from "dayjs/plugin/isLeapYear";
 import { BsGearFill, BsFillLightbulbFill } from "react-icons/bs";
+import { useEffect } from "react";
 
 dayjs.extend(isLeapYear); // use plugin
 dayjs.locale("ko"); // use locale
 
 export default function Header() {
-  const { setEdit } = useStore(defaultStore);
+  const { setEdit, setTheme, checkTheme } = useStore(defaultStore);
   const editMode = () => {
     setEdit(true);
   };
 
   const modeToggle = () => {
-    let theme = localStorage.getItem("theme");
-    let beforeTheme: any = theme;
-    theme = theme == "light" ? "dark" : "light";
-    document.documentElement.classList.replace(beforeTheme, theme);
-    localStorage.setItem("theme", theme);
+    setTheme();
   };
+
+  useEffect(() => {
+    checkTheme();
+  }, []);
 
   return (
     <header className="header">

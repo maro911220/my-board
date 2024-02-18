@@ -1,42 +1,136 @@
+/* weather */
 .weather {
   container: weather / inline-size;
   @apply flex flex-1 gap-4 overflow-hidden;
 
+  // weather-title
+  &-title {
+    @apply flex w-full justify-start text-base font-semibold mb-1;
+  }
+
+  // weather-today
   &-today {
-    @apply flex flex-col items-center gap-2;
-    &-top {
+    @apply flex-none max-w-full w-[450px] flex flex-col justify-center items-center p-2 gap-2;
+
+    &-con {
+      @apply flex-1 flex flex-wrap content-center gap-4 items-center justify-center;
+    }
+
+    &-box {
       @apply flex items-center gap-6;
-      &__img {
-        @apply flex-none w-[100px];
+
+      &__con {
+        @apply flex gap-2;
       }
-      &__text {
-        @apply flex flex-col gap-2;
-        p:first-of-type {
-          @apply text-5xl font-bold;
+    }
+
+    &-img {
+      @apply flex-none w-[72px];
+    }
+
+    &-name {
+      @apply text-lg font-semibold;
+    }
+
+    &-temp {
+      @apply ml-[-15px] font-bold text-5xl dark:drop-shadow-[0_0_3px_rgba(0,0,0,1)];
+      &__min {
+        span {
+          @apply ml-1 font-semibold text-blue-500;
         }
-        p:last-of-type {
-          @apply text-2xl;
+      }
+      &__max {
+        span {
+          @apply ml-1 font-semibold text-red-500;
         }
       }
     }
-    &-middle {
-      @apply flex gap-2 text-lg;
+
+    &-rain {
       span {
-        @apply font-semibold;
+        @apply ml-1 font-semibold text-sky-400;
       }
-      p:first-of-type {
-        span {
-          @apply text-blue-500;
+    }
+  }
+
+  // weather-time
+  &-time {
+    @apply w-[280px] flex flex-col justify-center items-center;
+    canvas {
+      @apply overflow-hidden;
+    }
+    &__icon {
+      @apply flex flex-none w-full pl-7 pr-1 justify-between;
+    }
+  }
+
+  // weather-week
+  &-week {
+    @apply pl-6 border-l flex flex-1 flex-col;
+    &-box {
+      @apply divide-y flex flex-1 flex-col;
+    }
+    &-item {
+      @apply flex px-2 justify-between items-center flex-1;
+    }
+    &-day {
+      @apply flex gap-4 items-center;
+    }
+    &-temp {
+      @apply flex gap-4;
+      p {
+        @apply w-[70px];
+        &:first-of-type {
+          span {
+            @apply font-semibold text-blue-500;
+          }
         }
-      }
-      p:last-of-type {
-        span {
-          @apply text-red-500;
+        &:last-of-type {
+          @apply text-right;
+          span {
+            @apply font-semibold text-red-500;
+          }
         }
       }
     }
   }
 }
 
-@container weather (max-width: 1100px) {
+/* container */
+@container weather (max-width: 1000px) {
+  .weather-today {
+    @apply w-[350px];
+  }
+
+  .weather-week {
+    @apply text-sm;
+
+    &-day {
+      @apply gap-2;
+    }
+    &-temp {
+      @apply gap-2;
+      p {
+        @apply w-[60px];
+      }
+    }
+  }
+}
+
+@container weather (max-width: 680px) {
+  .weather-today {
+    @apply w-full;
+  }
+  .weather-week {
+    @apply hidden;
+  }
+}
+
+@container weather (max-width: 500px) {
+  .weather-time {
+    @apply hidden;
+  }
+  .weather-today-box {
+    @apply flex-wrap justify-center;
+  }
 }

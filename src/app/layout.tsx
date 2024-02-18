@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 
 const themeInitializerScript = `
   (function () {
-    window.localStorage.getItem("theme") == 'light'? document.documentElement.classList = 'light' : document.documentElement.classList = "dark"
+    let theme = window.localStorage.getItem("theme");
+    theme = theme == 'light'?  'light' :  "dark";
+    document.documentElement.classList = theme;
   })();
 `;
 
