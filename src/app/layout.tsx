@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 
 const themeInitializerScript = `
   (function () {
-    window.localStorage.getItem("theme") == 'dark'? document.documentElement.classList = 'dark' : document.documentElement.classList = ""
+    let theme = window.localStorage.getItem("theme");
+    theme = theme == 'light'?  'light' :  "dark";
+    document.documentElement.classList = theme;
+    window.localStorage.setItem("theme",theme)
   })();
 `;
 
@@ -21,7 +24,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body>
-        <Header />
+        <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />
+        {/* <Header /> */}
         {children}
       </body>
     </html>
