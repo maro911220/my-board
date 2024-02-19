@@ -12,7 +12,6 @@ const themeInitializerScript = `
     let theme = window.localStorage.getItem("theme");
     theme = theme == 'light'?  'light' :  "dark";
     document.documentElement.classList = theme;
-    window.localStorage.setItem("theme",theme)
   })();
 `;
 
