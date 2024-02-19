@@ -23,8 +23,13 @@ export const defaultStore = create<Store>()((set) => ({
   },
   setTheme: () => {
     let themes = localStorage.getItem("theme");
-    themes = themes == "dark" ? "" : "dark";
-    document.documentElement.classList = themes;
+    if (themes == "dark") {
+      document.documentElement.classList.remove(themes);
+      themes = "";
+    } else {
+      themes = "dark";
+      document.documentElement.classList.add(themes);
+    }
     localStorage.setItem("theme", themes);
     set(() => ({ theme: themes }));
   },
