@@ -23,9 +23,8 @@ export const defaultStore = create<Store>()((set) => ({
   },
   setTheme: () => {
     let themes = localStorage.getItem("theme");
-    let beforeTheme: any = themes;
-    themes = themes == "light" ? "dark" : "light";
-    document.documentElement.classList.replace(beforeTheme, themes);
+    themes = themes == "dark" ? "" : "dark";
+    document.documentElement.classList = themes;
     localStorage.setItem("theme", themes);
     set(() => ({ theme: themes }));
   },
