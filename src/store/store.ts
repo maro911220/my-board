@@ -17,7 +17,8 @@ export const defaultStore = create<Store>()((set) => ({
   list: [],
   theme: null,
   checkTheme: () => {
-    let themes = localStorage.getItem("theme");
+    let themes: any = document.documentElement.classList;
+    localStorage.setItem("theme", themes);
     set(() => ({ theme: themes }));
   },
   setTheme: () => {
