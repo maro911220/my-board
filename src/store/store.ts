@@ -3,7 +3,6 @@ type Store = {
   edit: boolean;
   list: any[];
   theme: string | null;
-  checkTheme: () => void;
   setTheme: () => void;
   setDefaultList: () => void;
   setEdit: (e: any) => void;
@@ -16,20 +15,11 @@ export const defaultStore = create<Store>()((set) => ({
   edit: false,
   list: [],
   theme: null,
-  checkTheme: () => {
-    let themes: any = document.documentElement.classList;
-    localStorage.setItem("theme", themes);
-    set(() => ({ theme: themes }));
-  },
   setTheme: () => {
     let themes = localStorage.getItem("theme");
-    if (themes == "dark") {
-      document.documentElement.classList.remove(themes);
-      themes = "";
-    } else {
-      themes = "dark";
-      document.documentElement.classList.add(themes);
-    }
+    let beforeTheme: any = themes;
+    themes = themes == "light" ? "dark" : "light";
+    document.documentElement.classList.replace(beforeTheme, themes);
     localStorage.setItem("theme", themes);
     set(() => ({ theme: themes }));
   },
