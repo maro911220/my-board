@@ -23,7 +23,8 @@ export default function Page() {
   const renderItem = useCallback((item: { id: number }, index: number) => {
     const components = [
       <Ani key="1" />,
-      <Weather key="2" />,
+      <p key="2">component2</p>,
+      // <Weather key="2" />,
       <p key="3">component3</p>,
       <p key="4">component4</p>,
       <p key="5">component5</p>,
