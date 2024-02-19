@@ -38,3 +38,12 @@
 .list-save {
   @apply fixed bottom-10 left-[50%] translate-x-[-50%] text-2xl text-white font-semibold py-sm px-10 rounded bg-primary;
 }
+
+@media (max-width: 1000px) {
+  .list-grid {
+    @apply h-[2000px];
+  }
+  .list-grid-item {
+    @apply col-span-12 row-span-2 #{!important};
+  }
+}
