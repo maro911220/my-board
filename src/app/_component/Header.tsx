@@ -45,7 +45,7 @@ export default function Header() {
       <div className="header-con">
         <h1 className="hidden">Maro</h1>
         <p className="header-date">
-          {dayjs(new Date()).format("YYYY-MM-DD (ddd)")}
+          {/* {dayjs(new Date()).format("YYYY-MM-DD (ddd)")} */}
         </p>
         <div className="header-search">
           <input

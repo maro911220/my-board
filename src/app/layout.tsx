@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />
-        {/* <Header /> */}
+        <Header />
         {children}
       </body>
     </html>
