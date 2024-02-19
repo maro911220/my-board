@@ -13,7 +13,7 @@ dayjs.extend(isLeapYear); // use plugin
 dayjs.locale("ko"); // use locale
 
 export default function Header() {
-  const { setEdit, setTheme, checkTheme } = useStore(defaultStore);
+  const { setEdit, setTheme } = useStore(defaultStore);
   const [searchData, setSearchData] = useState("");
   const editMode = () => {
     setEdit(true);
@@ -22,10 +22,6 @@ export default function Header() {
   const modeToggle = () => {
     setTheme();
   };
-
-  useEffect(() => {
-    checkTheme();
-  }, []);
 
   const search = () => {
     if (searchData != "") {
