@@ -24,8 +24,8 @@ export default function Charts({ fitTimeList }: { fitTimeList: any }) {
   }));
 
   // 테마에 따라 틱과 그리드 색상 설정
-  const ticksColor = theme == "dark" ? "#ccc" : "#333";
-  const gridColor = theme == "dark" ? "#555" : "#ccc";
+  const ticksColor = theme != "dark" ? "#333" : "#ccc";
+  const gridColor = theme != "dark" ? "#ccc" : "#555";
 
   // 차트 옵션 설정
   const options = {
