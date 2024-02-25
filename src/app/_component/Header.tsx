@@ -16,6 +16,7 @@ dayjs.extend(isLeapYear);
 dayjs.locale("ko");
 
 export default function Header() {
+  const API_KEY = process.env.KAKAO;
   const inputRef = useRef<HTMLInputElement>(null);
   const { setEdit, setTheme, checkTheme } = useStore(defaultStore);
   const [page, setPage] = useState(1);
@@ -43,7 +44,7 @@ export default function Header() {
         .get(`https://dapi.kakao.com/v2/search/web`, {
           params: { query: trimmedSearchData, size: 20, page },
           headers: {
-            Authorization: "KakaoAK ddb4493be86f80bb366093fa2a1b3e3d",
+            Authorization: API_KEY,
           },
         })
         .then((res) => {
