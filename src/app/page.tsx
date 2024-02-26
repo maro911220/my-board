@@ -2,6 +2,7 @@
 import "./main.scss";
 import Item from "./_component/Item";
 import Ani from "./_component/ani/page";
+import Poke from "./_component/poke/page";
 import Weather from "./_component/weather/page";
 import { useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
@@ -24,7 +25,7 @@ export default function Page() {
     const components = [
       <Ani key="1" />,
       <Weather key="2" />,
-      <p key="3">component3</p>,
+      <Poke key="3" />,
       <p key="4">component4</p>,
       <p key="5">component5</p>,
       <p key="6">component6</p>,

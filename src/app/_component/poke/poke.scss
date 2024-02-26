@@ -1,0 +1,15 @@
+.poke {
+  container: poke / inline-size;
+  @apply flex flex-col flex-1 gap-4 overflow-hidden;
+
+  &-title {
+    @apply flex w-full justify-start text-base font-semibold mb-1;
+  }
+
+  &-box {
+    @apply flex flex-1 flex-col justify-center items-center;
+    &-img {
+      @apply w-[120px] h-[120px];
+    }
+  }
+}
