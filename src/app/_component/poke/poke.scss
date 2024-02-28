@@ -1,15 +1,91 @@
+/* poke */
 .poke {
   container: poke / inline-size;
-  @apply flex flex-col flex-1 gap-4 overflow-hidden;
+  @apply flex flex-1 gap-4 overflow-hidden;
 
   &-title {
     @apply flex w-full justify-start text-base font-semibold mb-1;
   }
 
+  /* poke-box */
   &-box {
-    @apply flex flex-1 flex-col justify-center items-center;
+    @apply flex flex-col flex-1 justify-center items-center;
+
+    &.type-stat {
+      @apply border-l pl-4;
+    }
+  }
+
+  &-main {
+    @apply flex items-center flex-1;
+    &-img {
+      @apply w-[160px] h-[160px];
+    }
+
+    &-detail {
+      @apply max-w-[300px] flex flex-col gap-1 ml-4 break-keep;
+      &__name {
+        @apply text-2xl font-bold;
+      }
+      & > div {
+        @apply flex flex-wrap gap-2;
+      }
+      &__flavor {
+        @apply h-[4.5rem] overflow-auto;
+      }
+    }
+  }
+
+  /* poke-stat */
+  &-stat {
+    @apply w-full flex flex-1 flex-col divide-y text-sm;
+    &-item {
+      @apply w-full flex items-center flex-1 py-1;
+    }
+    &-box {
+      @apply flex flex-1 items-center justify-between gap-1;
+      & > span {
+        @apply w-[30px] text-sm text-center;
+      }
+    }
+    &-name {
+      @apply w-[70px];
+    }
+    &-bar {
+      @apply flex-1 h-[12px] bg-slate-200 relative rounded-full overflow-hidden;
+      span {
+        @apply absolute top-0 left-0 h-full inline-block bg-primary indent-[-99px];
+      }
+    }
+  }
+}
+
+/* container */
+@container poke (max-width: 700px) {
+  .poke-box.type-stat {
+    @apply hidden;
+  }
+}
+
+@container poke (max-width: 350px) {
+  .poke-main {
+    @apply flex-col justify-center;
+
     &-img {
       @apply w-[120px] h-[120px];
+    }
+
+    &-detail {
+      @apply gap-1;
+      &__name {
+        @apply text-lg w-full;
+      }
+      & > div {
+        @apply gap-2;
+      }
+      &__flavor {
+        @apply hidden;
+      }
     }
   }
 }

@@ -2,8 +2,8 @@
 "use client";
 import "./poke.scss";
 import axios from "axios";
-import { useEffect } from "react";
 import dayjs from "dayjs";
+import { useState, useEffect } from "react";
 import { useQueries } from "@tanstack/react-query";
 
 export default function Page() {
@@ -11,27 +11,29 @@ export default function Page() {
   const currentDate = dayjs().format("YYYY-MM-DD");
 
   // 로컬 스토리지에서 날짜와 포켓몬 정보를 가져옵니다.
-  let localDate = localStorage.getItem("maro-date");
-  let localPoke = localStorage.getItem("maro-poke");
+  let [localDate, setLocalDate] = useState<string | null>(
+    localStorage.getItem("maro-date")
+  );
+  let [localPoke, setLocalPoke] = useState<string | null>(
+    localStorage.getItem("maro-poke")
+  );
 
   // 랜덤 포켓몬 번호를 생성합니다.
   function getRandomPoke() {
-    return Math.floor(Math.random() * 500);
+    return Math.floor(Math.random() * 500).toString();
   }
 
   // 새로운 데이터를 설정합니다.
   function setNewData() {
-    localDate = currentDate;
-    localPoke = getRandomPoke().toString();
-    localStorage.setItem("maro-date", localDate);
-    localStorage.setItem("maro-poke", localPoke);
+    setLocalDate(currentDate);
+    setLocalPoke(getRandomPoke());
+    localStorage.setItem("maro-date", currentDate);
+    localStorage.setItem("maro-poke", localPoke!);
   }
 
-  if (localDate && currentDate !== localDate) {
-    setNewData();
-  } else if (!localDate) {
-    setNewData();
-  }
+  useEffect(() => {
+    if (!localDate || currentDate !== localDate) setNewData();
+  }, []);
 
   // 포켓몬 API에 대한 쿼리 ID 배열
   const queryIds = [
@@ -64,17 +66,66 @@ export default function Page() {
     (genera: any) => genera.language.name === "ko"
   ).genus;
 
+  const pokeFlavor = speciesData.flavor_text_entries.find(
+    (genera: any) => genera.language.name === "ko"
+  ).flavor_text;
+
   const pokeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${localPoke}.png`;
 
   return (
     <>
       <h3 className="text-xl font-bold uppercase leading-4 mb-4">Poke</h3>
       <div className="poke">
-        <p className="poke-title">오늘의 럭키 포켓몬</p>
         <div className="poke-box">
-          <img className="poke-box-img" src={pokeImg} alt={pokename} />
-          <p>{pokename}</p>
-          <p>{pokeGenus}</p>
+          <p className="poke-title">오늘의 럭키 포켓몬</p>
+          <div className="poke-main">
+            <img className="poke-main-img" src={pokeImg} alt={pokename} />
+            <div className="poke-main-detail">
+              <p className="poke-main-detail__name">{pokename}</p>
+              <div>
+                <p>No.{pokemonData.id}</p>
+                <p>{pokeGenus}</p>
+              </div>
+              <div>
+                <p>키 : {pokemonData.height / 10}m</p>
+                <p>무게 : {pokemonData.weight / 10}KG</p>
+              </div>
+              <p className="poke-main-detail__flavor">{pokeFlavor}</p>
+            </div>
+          </div>
+        </div>
+        <div className="poke-box type-stat">
+          <p className="poke-title">포켓몬 능력치</p>
+          <div className="poke-stat">
+            {pokemonData.stats.map((item: any, index: number) => {
+              const baseStatNames: { [key: string]: string } = {
+                hp: "HP",
+                attack: "공격",
+                defense: "방어",
+                "special-attack": "특수공격",
+                "special-defense": "특수방어",
+                speed: "스피드",
+              };
+              const baseStat = baseStatNames[item.stat.name];
+
+              return (
+                <div key={index} className="poke-stat-item">
+                  <p className="poke-stat-name">{baseStat}</p>
+                  <div className="poke-stat-box">
+                    <span>{item.base_stat}</span>
+                    <div className="poke-stat-bar">
+                      <span
+                        style={{ width: (item.base_stat / 255) * 100 + "%" }}
+                      >
+                        {item.base_stat}
+                      </span>
+                    </div>
+                    <span>255</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>
