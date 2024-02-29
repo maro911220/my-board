@@ -36,7 +36,8 @@
 }
 
 .list-save {
-  @apply fixed bottom-10 left-[50%] translate-x-[-50%] text-2xl text-white font-semibold py-sm px-10 rounded bg-primary;
+  @apply fixed bottom-10 left-[50%] translate-x-[-50%] text-white font-semibold py-sm px-10 rounded bg-primary;
+  @apply sm:text-2xl text-lg;
 }
 
 @media (max-width: 1000px) {

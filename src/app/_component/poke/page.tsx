@@ -25,14 +25,17 @@ export default function Page() {
 
   // 새로운 데이터를 설정합니다.
   function setNewData() {
+    let num = getRandomPoke();
     setLocalDate(currentDate);
-    setLocalPoke(getRandomPoke());
+    setLocalPoke(num);
     localStorage.setItem("maro-date", currentDate);
-    localStorage.setItem("maro-poke", localPoke!);
+    localStorage.setItem("maro-poke", num);
   }
 
   useEffect(() => {
-    if (!localDate || currentDate !== localDate) setNewData();
+    if (!localDate || currentDate !== localDate) {
+      setNewData();
+    }
   }, []);
 
   // 포켓몬 API에 대한 쿼리 ID 배열
