@@ -19,13 +19,14 @@ export default function List({ data }: { data: any }) {
       modules={[Autoplay]}
     >
       {data.map((item: any, index: number) => {
+        const title = item.title ? item.title : item.original_name;
         return (
           <SwiperSlide key={index} className="media-list-item">
             <img
               src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-              alt={item.title}
+              alt={title}
             />
-            <p>{item.title}</p>
+            <p>{title}</p>
           </SwiperSlide>
         );
       })}

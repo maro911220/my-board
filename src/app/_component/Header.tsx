@@ -8,7 +8,7 @@ import isLeapYear from "dayjs/plugin/isLeapYear";
 import { BsGearFill, BsFillLightbulbFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 // Day.js 플러그인 확장, 한국어 설정
 dayjs.extend(isLeapYear);
@@ -16,6 +16,7 @@ dayjs.locale("ko");
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const inputRef = useRef<HTMLInputElement>(null);
   const { setEdit, setTheme, checkTheme } = useStore(defaultStore);
   const [searchData, setSearchData] = useState("");
@@ -32,7 +33,6 @@ export default function Header() {
       setSearchData("");
     } else {
       router.push(`/search/${searchData}`);
-      setSearchData("");
     }
   };
 
@@ -40,6 +40,11 @@ export default function Header() {
   useEffect(() => {
     checkTheme();
   }, []);
+
+  // 페이지 체크
+  useEffect(() => {
+    pathname === "/" && setSearchData("");
+  }, [pathname]);
 
   // 엔터 키 이벤트 핸들러
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
