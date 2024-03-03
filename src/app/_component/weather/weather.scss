@@ -10,7 +10,7 @@
 
   // weather-today
   &-today {
-    @apply flex-1 flex flex-col justify-center items-center p-2 gap-2;
+    @apply flex-1 flex flex-col justify-center items-center px-2;
 
     &-con {
       @apply flex-1 flex flex-wrap content-center gap-4 items-center justify-center;

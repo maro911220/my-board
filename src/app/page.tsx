@@ -1,9 +1,10 @@
 "use client";
 import "./main.scss";
 import Item from "./_component/Item";
-import Ani from "./_component/ani/page";
+import Movie from "./_component/movie/page";
 import Poke from "./_component/poke/page";
 import Weather from "./_component/weather/page";
+import Tv from "./_component/tv/page";
 import { useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
 import { HTML5toTouch } from "rdndmb-html5-to-touch";
@@ -23,12 +24,10 @@ export default function Page() {
   // 아이템을 렌더링하는 콜백 함수 정의
   const renderItem = useCallback((item: { id: number }, index: number) => {
     const components = [
-      <Ani key="1" />,
+      <Movie key="1" />,
       <Weather key="2" />,
       <Poke key="3" />,
-      <p key="4">component4</p>,
-      <p key="5">component5</p>,
-      <p key="6">component6</p>,
+      <Tv key="4" />,
     ];
 
     return (

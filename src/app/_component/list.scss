@@ -1,0 +1,22 @@
+/* media */
+.media {
+  container: media / inline-size;
+  @apply flex flex-col flex-1 overflow-hidden;
+
+  &-title {
+    @apply flex w-full justify-start text-base font-semibold mb-1;
+  }
+  .swiper {
+    width: 100%;
+    height: 100%;
+    &-slide {
+      @apply w-[160px] inline-flex flex-col;
+      img {
+        @apply flex-1 overflow-hidden rounded border;
+      }
+      p {
+        @apply truncate px-1;
+      }
+    }
+  }
+}

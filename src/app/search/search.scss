@@ -1,16 +1,12 @@
-.modal {
-  @apply fixed top-0 left-0 w-full h-lvh flex justify-center;
-  &-wrapper {
-    @apply absolute top-0 left-0 w-full h-full bg-black/50;
-  }
+.search {
+  @apply flex justify-center h-[calc(100vh-80px)];
 
   &-con {
-    @apply relative top-[80px]  bg-white dark:bg-stone-900 z-10 rounded-lg;
-    @apply h-[calc(100vh-120px)] overflow-hidden w-[800px] max-w-[calc(100%-40px)] flex flex-col;
+    @apply w-full max-w-lg flex flex-col px-lg overflow-hidden;
   }
 
   &-result {
-    @apply text-lg py-2 px-4 flex-none font-bold border-b;
+    @apply text-lg py-2  flex-none font-bold bg-white dark:bg-stone-900;
     span {
       @apply text-primary;
     }
@@ -19,7 +15,7 @@
   &-list {
     @apply flex flex-col divide-y flex-1 overflow-auto origin-top;
     &-item {
-      @apply flex flex-col py-1 px-4 bg-list hover:bg-listHover hover:dark:bg-listHoverDark;
+      @apply flex flex-col py-1 px-2 bg-list hover:bg-listHover hover:dark:bg-listHoverDark;
       & > div {
         @apply flex justify-between items-center text-sm mb-1;
         span:first-of-type {

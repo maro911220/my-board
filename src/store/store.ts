@@ -29,14 +29,7 @@ export const defaultStore = create<Store>()((set) => ({
     set(() => ({ theme: themes }));
   },
   setDefaultList: () => {
-    const defaultItem = [
-      { id: 0 },
-      { id: 1 },
-      { id: 2 },
-      { id: 3 },
-      { id: 4 },
-      { id: 5 },
-    ];
+    const defaultItem = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
     const localItem = localStorage.getItem("dndLayouts");
     set(() => ({ list: localItem ? JSON.parse(localItem) : defaultItem }));
   },
