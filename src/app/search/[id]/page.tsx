@@ -76,7 +76,7 @@ export default function Page(props: any) {
               })
             ) : (
               // 검색 결과가 없을 경우 메시지를 표시합니다.
-              <div>검색 결과가 없습니다.</div>
+              <div>검색 결과가 없습니다..</div>
             )}
           </div>
           {currentPage !== 1 && (
