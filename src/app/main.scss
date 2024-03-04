@@ -7,7 +7,9 @@
 
   &-item {
     @apply flex flex-col p-lg rounded border  col-span-12 row-span-3 bg-white dark:border-transparent dark:bg-stone-800 overflow-hidden;
-
+    &:nth-of-type(n + 5) {
+      @apply hidden;
+    }
     &.edit {
       @apply cursor-grab border-dashed;
       * {

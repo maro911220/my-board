@@ -17,6 +17,11 @@ const config: Config = {
         md: "14px",
         sm: "8px",
       },
+      margin: {
+        lg: "20px",
+        md: "14px",
+        sm: "8px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
-import "@/app/search/search.scss";
+import "../search.scss";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function Page(props: any) {
@@ -27,8 +27,10 @@ export default function Page(props: any) {
     queryClient.prefetchQuery({
       queryKey: [title],
       queryFn: () => fetchData(num),
-      staleTime: 10,
+      staleTime: 1,
     });
+
+    window.scrollTo(0, 0);
   };
 
   // 데이터를 가져오는 React Query 훅
@@ -41,14 +43,10 @@ export default function Page(props: any) {
   if (isPending) return "Loading...";
   if (error) return "An error has occurred: " + error.message;
 
-  console.log(data);
   return (
     <div>
       <div className="search">
         <div className="search-con" onClick={(e) => e.stopPropagation()}>
-          <p className="search-result">
-            <span>{title}</span> 검색 결과
-          </p>
           <div className="search-list">
             {data.documents.length > 0 ? (
               // 검색 결과가 있을 경우 각 항목을 매핑하여 렌더링합니다.
@@ -79,8 +77,9 @@ export default function Page(props: any) {
               <div>검색 결과가 없습니다..</div>
             )}
           </div>
-          {currentPage !== 1 && (
+          <div className="search-btn">
             <button
+              className={`${currentPage == 1 ? "disabled" : ""}`}
               onClick={() => {
                 setCurrentPage((prev) => prev - 1);
                 prefetch(-1);
@@ -88,10 +87,9 @@ export default function Page(props: any) {
             >
               Prev
             </button>
-          )}
-
-          {!data.meta.is_end && (
+            <span>{currentPage}</span>
             <button
+              className={`${data.meta.is_end ? "disabled" : ""}`}
               onClick={() => {
                 setCurrentPage((prev) => prev + 1);
                 prefetch(1);
@@ -99,7 +97,7 @@ export default function Page(props: any) {
             >
               Next
             </button>
-          )}
+          </div>
         </div>
       </div>
     </div>

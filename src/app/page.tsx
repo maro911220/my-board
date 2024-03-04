@@ -1,10 +1,10 @@
 "use client";
 import "./main.scss";
 import Item from "./_component/Item";
-import Movie from "./_component/movie/page";
-import Poke from "./_component/poke/page";
-import Weather from "./_component/weather/page";
-import Tv from "./_component/tv/page";
+import Movie from "./_component/(home)/movie/page";
+import Poke from "./_component/(home)/poke/page";
+import Weather from "./_component/(home)/weather/page";
+import Tv from "./_component/(home)/tv/page";
 import { useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
 import { HTML5toTouch } from "rdndmb-html5-to-touch";

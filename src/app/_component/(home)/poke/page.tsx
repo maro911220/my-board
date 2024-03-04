@@ -20,7 +20,7 @@ export default function Page() {
 
   // 랜덤 포켓몬 번호를 생성합니다.
   function getRandomPoke() {
-    return Math.floor(Math.random() * 500).toString();
+    return Math.floor(Math.random() * 900).toString();
   }
 
   // 새로운 데이터를 설정합니다.
