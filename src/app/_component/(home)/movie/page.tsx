@@ -35,7 +35,7 @@ export default function Movie() {
       <h3 className="text-xl font-bold uppercase leading-4 mb-4">Movie</h3>
       <div className="media">
         <p className="media-title">최신 영화</p>
-        {reload && <List data={data.results} />}
+        {reload && <List data={data.results} type="movie" />}
       </div>
     </>
   );

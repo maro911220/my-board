@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/app/_component/Header";
+import Footer from "@/app/_component/Footer";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

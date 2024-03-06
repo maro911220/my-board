@@ -3,8 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "./list.scss";
+import Link from "next/link";
 
-export default function List({ data }: { data: any }) {
+export default function List({ data, type }: { data: any; type: string }) {
   return (
     <Swiper
       className="media-list"
@@ -14,7 +15,7 @@ export default function List({ data }: { data: any }) {
         delay: 2500,
         disableOnInteraction: false,
       }}
-      loop={true}
+      // loop={true}
       onSwiper={(swiper) => console.log(swiper)}
       modules={[Autoplay]}
     >
@@ -22,11 +23,13 @@ export default function List({ data }: { data: any }) {
         const title = item.title ? item.title : item.original_name;
         return (
           <SwiperSlide key={index} className="media-list-item">
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-              alt={title}
-            />
-            <p>{title}</p>
+            <Link href={`/${type}/${item.id}`}>
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+                alt={title}
+              />
+              <p>{title}</p>
+            </Link>
           </SwiperSlide>
         );
       })}

@@ -5,19 +5,19 @@
 
   // weather-title
   &-title {
-    @apply flex w-full justify-start text-base font-semibold mb-1;
+    @apply w-full text-base font-semibold mb-1;
   }
 
   // weather-today
   &-today {
-    @apply flex-1 flex flex-col justify-center items-center px-2;
+    @apply flex-1 flex flex-col justify-center items-center;
 
     &-con {
-      @apply flex-1 flex flex-wrap content-center gap-4 items-center justify-center;
+      @apply flex-1 flex flex-col items-center justify-center gap-2;
     }
 
     &-box {
-      @apply flex items-center gap-6;
+      @apply flex flex-wrap justify-center items-center gap-2;
 
       &__con {
         @apply flex gap-2;
@@ -33,7 +33,7 @@
     }
 
     &-temp {
-      @apply ml-[-15px] font-bold text-5xl dark:drop-shadow-[0_0_3px_rgba(0,0,0,1)];
+      @apply ml-[-30px] font-bold text-5xl dark:drop-shadow-[0_0_3px_rgba(0,0,0,1)];
       &__min {
         span {
           @apply ml-1 font-semibold text-blue-500;
@@ -60,7 +60,7 @@
       @apply overflow-hidden;
     }
     &__icon {
-      @apply flex flex-none w-full pl-5 pr-1 justify-between;
+      @apply w-full flex flex-none justify-between pl-5 pr-1;
     }
   }
 
@@ -79,7 +79,7 @@
     &-temp {
       @apply flex gap-4;
       p {
-        @apply w-[70px];
+        @apply w-[80px];
         &:first-of-type {
           span {
             @apply font-semibold text-blue-500;
@@ -98,18 +98,16 @@
 
 /* container */
 @container weather (max-width: 1000px) {
-  .weather-today {
-    @apply w-[350px];
-  }
-
   .weather-week {
     @apply text-sm;
-
     &-day {
       @apply gap-2;
     }
     &-temp {
       @apply gap-2;
+      p {
+        @apply w-[70px];
+      }
     }
   }
 }
@@ -128,6 +126,6 @@
     @apply hidden;
   }
   .weather-today-box {
-    @apply flex-wrap justify-center;
+    @apply flex-col;
   }
 }
