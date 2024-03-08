@@ -23,6 +23,7 @@
   }
 
   &-text {
+    @apply w-full;
     &__title {
       @apply text-3xl font-semibold;
     }
@@ -45,7 +46,25 @@
   }
 
   &-credits {
-    @apply flex;
+    @apply flex flex-col mt-8;
+
+    &__title {
+      @apply text-xl mb-2;
+    }
+
+    .swiper {
+      @apply flex m-0;
+
+      &-slide {
+        @apply w-[120px] items-stretch bg-stone-800 rounded overflow-hidden;
+        img {
+          @apply w-[120px] h-[150px] object-cover;
+        }
+        p {
+          @apply p-sm;
+        }
+      }
+    }
   }
 }
 

@@ -11,9 +11,13 @@
     height: 100%;
     &-slide {
       @apply w-[160px] inline-flex flex-col;
-      img {
-        @apply flex-1 overflow-hidden rounded border;
+      div {
+        @apply w-full h-[230px] border rounded overflow-hidden;
+        img {
+          @apply w-full h-full object-cover;
+        }
       }
+
       p {
         @apply truncate px-1;
       }

@@ -15,7 +15,7 @@ export default function List({ data, type }: { data: any; type: string }) {
         delay: 2500,
         disableOnInteraction: false,
       }}
-      // loop={true}
+      loop={true}
       onSwiper={(swiper) => console.log(swiper)}
       modules={[Autoplay]}
     >
@@ -24,10 +24,12 @@ export default function List({ data, type }: { data: any; type: string }) {
         return (
           <SwiperSlide key={index} className="media-list-item">
             <Link href={`/${type}/${item.id}`}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-                alt={title}
-              />
+              <div>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+                  alt={title}
+                />
+              </div>
               <p>{title}</p>
             </Link>
           </SwiperSlide>

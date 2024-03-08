@@ -39,7 +39,7 @@ export default function Page(props: any) {
     genres: data?.genres,
     runtime: data?.runtime,
     release_date: data?.release_date,
-    credits: creditsData?.cast.slice(0, 10),
+    credits: creditsData?.cast.slice(0, 20),
   };
 
   return (

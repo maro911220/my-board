@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import "./mediaList.scss";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 export default function MediaList({ mediaData }: { mediaData: any }) {
-  console.log(mediaData.credits);
   return (
     <div className="media-detail-item">
       <div className="media-detail-con">
@@ -39,17 +40,29 @@ export default function MediaList({ mediaData }: { mediaData: any }) {
         </div>
       </div>
       <div className="media-detail-credits">
-        {mediaData.credits?.map((item: any, index: number) => {
-          return (
-            <div key={index}>
-              <img
-                src={`https://media.themoviedb.org/t/p/w138_and_h175_face/${item.profile_path}.jpg`}
-                alt={item.name}
-              />
-              <p>{item.name}</p>
-            </div>
-          );
-        })}
+        <p className="media-detail-credits__title">주요 출연진</p>
+        <div className="flex">
+          <Swiper
+            spaceBetween={12}
+            slidesPerView="auto"
+            loop={true}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {mediaData.credits?.map((item: any, index: number) => {
+              return (
+                item.profile_path && (
+                  <SwiperSlide key={index}>
+                    <img
+                      src={`https://media.themoviedb.org/t/p/w138_and_h175_face/${item.profile_path}.jpg`}
+                      alt={item.name}
+                    />
+                    <p>{item.name}</p>
+                  </SwiperSlide>
+                )
+              );
+            })}
+          </Swiper>
+        </div>
       </div>
     </div>
   );
