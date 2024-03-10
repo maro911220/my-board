@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { useGeolocation } from "@uidotdev/usehooks";
 import { useQueries } from "@tanstack/react-query";
 import Charts from "./_component/chart";
+import Loading from "@/app/_component/Loading";
 
 // 날씨 상태에 따른 정보 객체
 const weatherDescriptions: any = {
@@ -47,7 +48,7 @@ export default function Weather() {
   // 위치 정보 에러
   if (error) return <p>위치동의가 필요합니다.</p>;
   // API 데이터 로딩
-  if (results[0].isPending || results[1].isPending) return "Loading...";
+  if (results[0].isPending || results[1].isPending) return <Loading />;
 
   return (
     <>

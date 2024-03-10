@@ -6,6 +6,7 @@ import { defaultStore } from "@/store/store";
 import { useStore } from "zustand";
 import { useEffect, useState } from "react";
 import List from "@/app/_component/List";
+import Loading from "@/app/_component/Loading";
 
 export default function Movie() {
   const [reload, setReload] = useState(false);
@@ -20,14 +21,19 @@ export default function Movie() {
   }, [list]);
 
   const API_KEY = process.env.TMDB;
-  const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=ko`;
+  const url = `https://api.themoviedb.org/3/movie/now_playing`;
   const { isPending, error, data } = useQuery({
     queryKey: ["movies"],
-    queryFn: () => axios.get(url).then((res) => res.data),
+    queryFn: () =>
+      axios
+        .get(url, {
+          params: { api_key: API_KEY, language: "ko" },
+        })
+        .then((res) => res.data),
   });
 
   // Loading & Error
-  if (isPending) return "Loading...";
+  if (isPending) return <Loading />;
   if (error) return "An error has occurred: " + error.message;
 
   return (

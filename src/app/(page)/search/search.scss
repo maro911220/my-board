@@ -1,6 +1,4 @@
 .search {
-  @apply max-w-lg mx-auto mb-8 px-lg;
-
   &-con {
     @apply w-full h-full flex flex-col;
   }
@@ -22,7 +20,7 @@
   }
 
   &-list {
-    @apply flex flex-col divide-y flex-1 my-4 p-lg border rounded dark:bg-stone-800;
+    @apply flex flex-col divide-y flex-1 mb-4 p-lg border rounded dark:bg-stone-800;
     &-item {
       @apply flex flex-col py-1 px-2 bg-list hover:bg-listHover hover:dark:bg-listHoverDark;
       & > div {

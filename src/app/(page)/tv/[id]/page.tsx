@@ -10,8 +10,8 @@ export default function Page(props: any) {
 
   // 데이터를 가져오는 React Query 훅
   const ids = [
-    `https://api.themoviedb.org/3/movie/${title}`,
-    `https://api.themoviedb.org/3/movie/${title}/credits`,
+    `https://api.themoviedb.org/3/tv/${title}`,
+    `https://api.themoviedb.org/3/tv/${title}/credits`,
   ];
 
   const results = useQueries({
@@ -29,14 +29,14 @@ export default function Page(props: any) {
   const creditsData = results[1].data?.data;
 
   const mediaData = {
-    type: "movie",
-    title: data?.title,
-    tagline: data?.tagline,
+    type: "tv",
+    title: data?.name,
+    tagline: data?.type,
     overview: data?.overview,
     poster: data?.poster_path,
     genres: data?.genres,
-    runtime: data?.runtime,
-    release_date: data?.release_date,
+    runtime: data?.episode_run_time,
+    release_date: data?.first_air_date,
     credits: creditsData?.cast.slice(0, 20),
     vote: data?.vote_average,
   };

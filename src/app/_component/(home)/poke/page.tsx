@@ -5,6 +5,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useQueries } from "@tanstack/react-query";
+import Loading from "@/app/_component/Loading";
 
 export default function Page() {
   // 현재 날짜와 시간을 가져옵니다.
@@ -58,19 +59,16 @@ export default function Page() {
   const speciesData = results[1].data?.data;
 
   // Loading 처리
-  if (results[0].isPending || results[1].isPending) return "Loading...";
+  if (results[0].isPending || results[1].isPending) return <Loading />;
 
   // Loading 이후 데이터 적용
-  const pokename = speciesData.names.find(
-    (name: any) => name.language.name === "ko"
-  ).name;
+  const findDataByLanguage = (data: any) =>
+    data.find((item: any) => item.language.name === "ko");
 
-  const pokeGenus = speciesData.genera.find(
-    (genera: any) => genera.language.name === "ko"
-  ).genus;
-
-  const pokeFlavor = speciesData.flavor_text_entries.find(
-    (genera: any) => genera.language.name === "ko"
+  const pokename = findDataByLanguage(speciesData.names).name;
+  const pokeGenus = findDataByLanguage(speciesData.genera).genus;
+  const pokeFlavor = findDataByLanguage(
+    speciesData.flavor_text_entries
   ).flavor_text;
 
   const pokeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${localPoke}.png`;

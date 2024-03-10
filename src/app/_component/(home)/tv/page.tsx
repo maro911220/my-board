@@ -7,11 +7,12 @@ import { defaultStore } from "@/store/store";
 import { useStore } from "zustand";
 import { useEffect, useState } from "react";
 import List from "@/app/_component/List";
+import Loading from "@/app/_component/Loading";
 
 export default function Tv() {
   const [reload, setReload] = useState(false);
   const { list } = useStore(defaultStore);
-  const date = dayjs().format("YYYY-MM-DD");
+  const date = dayjs().format("YYYY");
 
   // 상태 업데이트 후 슬라이드 재생성
   useEffect(() => {
@@ -22,14 +23,24 @@ export default function Tv() {
   }, [list]);
 
   const API_KEY = process.env.TMDB;
-  const url = `https://api.themoviedb.org/3/discover/tv?language=ko-KR&with_origin_country=KR&air_date.gte=${date}&api_key=${API_KEY}`;
+  const url = `https://api.themoviedb.org/3/discover/tv`;
   const { isPending, error, data } = useQuery({
     queryKey: ["tv"],
-    queryFn: () => axios.get(url).then((res) => res.data),
+    queryFn: () =>
+      axios
+        .get(url, {
+          params: {
+            api_key: API_KEY,
+            language: "ko-KR",
+            with_origin_country: "KR",
+            first_air_date_year: date,
+          },
+        })
+        .then((res) => res.data),
   });
 
   // Loading & Error
-  if (isPending) return "Loading...";
+  if (isPending) return <Loading />;
   if (error) return "An error has occurred: " + error.message;
 
   return (

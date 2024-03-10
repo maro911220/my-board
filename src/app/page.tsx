@@ -24,10 +24,10 @@ export default function Page() {
   // 아이템을 렌더링하는 콜백 함수 정의
   const renderItem = useCallback((item: { id: number }, index: number) => {
     const components = [
-      <Movie key="1" />,
-      <Weather key="2" />,
-      <Poke key="3" />,
-      <Tv key="4" />,
+      <Tv key="1" />,
+      <Movie key="2" />,
+      <Weather key="3" />,
+      <Poke key="4" />,
     ];
 
     return (
