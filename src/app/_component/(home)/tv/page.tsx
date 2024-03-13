@@ -18,7 +18,7 @@ export default function Tv() {
   useEffect(() => {
     setTimeout(() => {
       setReload(true);
-    }, 10);
+    }, 5);
     return () => setReload(false);
   }, [list]);
 

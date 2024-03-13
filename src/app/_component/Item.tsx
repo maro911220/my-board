@@ -1,11 +1,11 @@
-import { useRef } from "react";
+import { useRef, ReactDOM } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { itemProps, DragItemProps } from "./type";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
 
 export default function Item({ id, index, children }: itemProps) {
-  const { list, moveItem, edit } = useStore(defaultStore);
+  const { list, setList, edit } = useStore(defaultStore);
   const ref = useRef<HTMLDivElement>(null);
 
   // 드래그 앤 드롭 로직
@@ -19,11 +19,35 @@ export default function Item({ id, index, children }: itemProps) {
 
   const [handlerId, drop] = useDrop<DragItemProps>({
     accept: "item",
-    hover(item: DragItemProps) {
-      if (item.index !== index) {
-        moveItem(list, item.index, index);
-        item.index = index;
+    hover(item: DragItemProps, monitor: any) {
+      if (!ref.current) {
+        return;
       }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+
+      const newItem = [...list];
+      const draggedItem = newItem[dragIndex];
+      newItem.splice(dragIndex, 1);
+      newItem.splice(hoverIndex, 0, draggedItem);
+      setList(newItem);
+      item.index = hoverIndex;
     },
   });
 
@@ -31,11 +55,7 @@ export default function Item({ id, index, children }: itemProps) {
   edit ? drag(drop(ref)) : drag(null);
 
   return (
-    <article
-      ref={ref}
-      style={{ opacity: isDragging ? 0.3 : 1 }}
-      className={`list-grid-item ${edit ? "edit" : ""}`}
-    >
+    <article ref={ref} className={`list-grid-item ${edit ? "edit" : ""}`}>
       {children}
     </article>
   );

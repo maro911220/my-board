@@ -16,7 +16,7 @@ export default function Movie() {
   useEffect(() => {
     setTimeout(() => {
       setReload(true);
-    }, 10);
+    }, 5);
     return () => setReload(false);
   }, [list]);
 

@@ -9,7 +9,6 @@ type Store = {
   setEdit: (e: any) => void;
   setList: (e: any) => void;
   setLayout: (e: any) => void;
-  moveItem: (e: any, dragIndex: any, hoverIndex: any) => void;
 };
 
 export const defaultStore = create<Store>()((set) => ({
@@ -38,16 +37,5 @@ export const defaultStore = create<Store>()((set) => ({
   setLayout: (e) => {
     set(() => ({ edit: false }));
     localStorage.setItem("dndLayouts", JSON.stringify(e));
-  },
-  moveItem: (e, dragIndex, hoverIndex) => {
-    const act = () => {
-      const newItem = [...e];
-      const draggedItem = newItem[dragIndex];
-      newItem.splice(dragIndex, 1);
-      newItem.splice(hoverIndex, 0, draggedItem);
-      return newItem;
-    };
-
-    set(() => ({ list: act() }));
   },
 }));

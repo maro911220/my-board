@@ -11,6 +11,7 @@ import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AnimatePresence } from "framer-motion";
 
 // 쿼리 클라이언트 생성
 const queryClient = new QueryClient();
