@@ -10,13 +10,13 @@ import { useEffect, useRef } from "react";
 
 export default function List({ data, type }: { data: any; type: string }) {
   const { edit } = useStore(defaultStore);
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
   useEffect(() => {
     if (edit) {
-      ref.current?.swiper?.slideTo(0, 0, false);
-      ref.current?.swiper?.autoplay?.stop();
+      ref.current.swiper.slideTo(0, 0, false);
+      ref.current.swiper.autoplay.stop();
     } else {
-      ref.current?.swiper?.autoplay?.start();
+      ref.current.swiper.autoplay.start();
     }
   }, [edit]);
   return (
