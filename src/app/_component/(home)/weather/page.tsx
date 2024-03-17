@@ -15,7 +15,7 @@ const weatherDescriptions: any = {
   Atmosphere: { name: "흐림", icon: "cloudy-qusts" },
   Snow: { name: "눈", icon: "snow" },
   Rain: { name: "비", icon: "rain" },
-  Drizzle: { name: "이슬비", icon: "drizzle" },
+  Drizzle: { name: "이슬비", icon: "rain" },
   Thunderstorm: { name: "뇌우", icon: "thunder" },
 };
 const API_KEY = process.env.WEATHER;
@@ -73,8 +73,9 @@ function Days({
     <img
       key={index && index}
       width={classes ? "" : 20}
+      height={classes ? "" : 20}
       className={classes ? "weather-today-img" : ""}
-      src={`/img/weather/${weatherDescriptions[weather].icon}.png`}
+      src={`/img/weather/${weatherDescriptions[weather].icon}.svg`}
       alt={weatherDescriptions[weather].name}
     />
   );
@@ -112,17 +113,20 @@ function Days({
           {renderWeatherIcon(dayItem.weather[0].main, true, null)}
           <p className="weather-today-temp">
             {parseFloat(dayItem.temp.day).toFixed(1)}°
+            <span className="weather-today-name">
+              {dayItem.weather[0].main}
+            </span>
           </p>
         </div>
 
         <div>
-          <p className="weather-today-name">{dayItem.weather[0].main}</p>
           <div className="weather-today-box__con">
             <p className="weather-today-temp__min">
-              최저<span>{parseFloat(dayItem.temp.min).toFixed(1)}°</span>
+              <span>{parseFloat(dayItem.temp.min).toFixed(1)}°</span>
             </p>
+            <p>/</p>
             <p className="weather-today-temp__max">
-              최고<span>{parseFloat(dayItem.temp.max).toFixed(1)}°</span>
+              <span>{parseFloat(dayItem.temp.max).toFixed(1)}°</span>
             </p>
           </div>
           <p className="weather-today-rain">

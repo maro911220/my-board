@@ -2,24 +2,10 @@
 "use client";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { defaultStore } from "@/store/store";
-import { useStore } from "zustand";
-import { useEffect, useState } from "react";
 import List from "@/app/_component/List";
 import Loading from "@/app/_component/Loading";
 
 export default function Movie() {
-  const [reload, setReload] = useState(false);
-  const { list } = useStore(defaultStore);
-
-  // 상태 업데이트 후 슬라이드 재생성
-  useEffect(() => {
-    setTimeout(() => {
-      setReload(true);
-    }, 5);
-    return () => setReload(false);
-  }, [list]);
-
   const API_KEY = process.env.TMDB;
   const url = `https://api.themoviedb.org/3/movie/now_playing`;
   const { isPending, error, data } = useQuery({
@@ -41,7 +27,7 @@ export default function Movie() {
       <h3 className="text-xl font-bold uppercase leading-4 mb-4">Movie</h3>
       <div className="media">
         <p className="media-title">최신 영화</p>
-        {reload && <List data={data.results} type="movie" />}
+        <List data={data.results} type="movie" />
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { useRef, ReactDOM } from "react";
+import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { itemProps, DragItemProps } from "./type";
 import { useStore } from "zustand";
@@ -55,7 +55,12 @@ export default function Item({ id, index, children }: itemProps) {
   edit ? drag(drop(ref)) : drag(null);
 
   return (
-    <article ref={ref} className={`list-grid-item ${edit ? "edit" : ""}`}>
+    <article
+      ref={ref}
+      className={`list-grid-item ${isDragging ? "draging" : ""} ${
+        edit ? "edit" : ""
+      }`}
+    >
       {children}
     </article>
   );

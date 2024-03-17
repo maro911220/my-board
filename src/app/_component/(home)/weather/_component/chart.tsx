@@ -5,13 +5,22 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 // ChartJS에 필요한 요소 등록
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  ChartDataLabels
+);
 
 // Charts 컴포넌트 정의
 export default function Charts({ fitTimeList }: { fitTimeList: any }) {
@@ -23,28 +32,47 @@ export default function Charts({ fitTimeList }: { fitTimeList: any }) {
     time: item.dt_txt.slice(-8).slice(0, 2) + "시",
   }));
 
-  // 테마에 따라 틱과 그리드 색상 설정
+  // 테마에 따라 틱 색상 설정
   const ticksColor = theme != "dark" ? "#333" : "#ccc";
-  const gridColor = theme != "dark" ? "#ccc" : "#555";
 
   // 차트 옵션 설정
-  const options = {
+  const options: any = {
     responsive: true,
+    plugins: {
+      datalabels: {
+        color: ticksColor,
+        offset: -20,
+        formatter: (value: number) => {
+          return value.toFixed(1) + "°";
+        },
+        anchor: "end",
+        align: "start",
+      },
+    },
+    layout: {
+      padding: {
+        top: 20,
+      },
+    },
     scales: {
       y: {
         ticks: {
-          color: ticksColor,
+          color: "transparent",
         },
         grid: {
-          color: gridColor,
+          color: "transparent",
+        },
+        border: {
+          color: "transparent",
         },
       },
       x: {
         ticks: {
           color: ticksColor,
         },
-        grid: {
-          color: gridColor,
+        grid: { color: "transparent" },
+        border: {
+          color: "rgba(93,90,255,1)",
         },
       },
     },
@@ -57,8 +85,21 @@ export default function Charts({ fitTimeList }: { fitTimeList: any }) {
       {
         label: "Temperature",
         data: mappedData.map((dataPoint: any) => dataPoint.temperature),
-        borderColor: "#5D5AFF",
-        backgroundColor: "#5D5AFF",
+        borderColor: "rgba(93,90,255,1)",
+        borderWidth: 1,
+        backgroundColor: (context: any) => {
+          if (!context.chart.chartArea) return;
+          const {
+            ctx,
+            chartArea: { top, bottom },
+          } = context.chart;
+          const gradientBg = ctx.createLinearGradient(0, top, 0, bottom);
+          gradientBg.addColorStop(0, "rgba(93,90,255,1)");
+          gradientBg.addColorStop(0.5, "rgba(93,90,255,0.5)");
+          gradientBg.addColorStop(1, "rgba(93,90,255,0.2)");
+          return gradientBg;
+        },
+        fill: true,
       },
     ],
   };

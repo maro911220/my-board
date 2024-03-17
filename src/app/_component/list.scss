@@ -14,12 +14,34 @@
       div {
         @apply w-full h-[230px] border rounded overflow-hidden;
         img {
-          @apply w-full h-full object-cover;
+          @apply w-full h-full object-cover transition-all duration-300;
         }
       }
 
       p {
         @apply truncate px-1;
+      }
+
+      &:hover {
+        div {
+          img {
+            @apply scale-105;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 699px) {
+  .media {
+    @apply min-h-[212px];
+    .swiper {
+      &-slide {
+        @apply w-[100px];
+        div {
+          @apply h-[160px];
+        }
       }
     }
   }
