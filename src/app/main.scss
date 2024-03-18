@@ -25,11 +25,6 @@
   }
 }
 
-.list-save {
-  @apply fixed bottom-10 left-[50%] translate-x-[-50%] text-white font-semibold py-sm px-10 rounded bg-primary z-20;
-  @apply sm:text-2xl text-lg;
-}
-
 .main-sub {
   @apply relative min-h-[calc(100vh-140px)] max-w-lg mx-auto py-8 px-lg;
 }
@@ -41,6 +36,29 @@
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* edit modal */
+.edit-modal {
+  @apply fixed flex top-0 left-0 right-0 bottom-0 z-10;
+
+  &-con {
+    @apply relative z-10 flex flex-col gap-[20px] p-[20px] w-[420px] h-[520px] bg-stone-900 m-auto border rounded;
+  }
+  &-list {
+    @apply flex-1 flex flex-col gap-[20px];
+  }
+  &-box {
+    @apply h-[25%] min-h-0 overflow-hidden text-2xl flex items-center justify-center bg-stone-800 cursor-move border border-dashed rounded;
+  }
+
+  .list-save {
+    @apply text-white font-semibold py-sm px-10 rounded bg-primary z-20;
+    @apply sm:text-2xl text-lg;
+  }
+  &-backdrop {
+    @apply absolute top-0 left-0 w-full h-full bg-stone-900/50 backdrop-blur-lg;
   }
 }
 
@@ -69,9 +87,7 @@
 }
 
 /* edit mode */
-body:has(.list-grid-item.edit) {
-  .header,
-  .footer {
-    @apply pointer-events-none grayscale opacity-50;
-  }
+body:has(.edit-modal) {
+  // @apply grayscale overflow-hidden;
+  @apply h-full overflow-hidden;
 }

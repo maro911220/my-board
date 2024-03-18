@@ -53,9 +53,6 @@
   }
   .header-btn button {
     @apply w-[32px] h-[32px];
-    &:first-of-type {
-      @apply hidden;
-    }
   }
   .header-search {
     @apply max-w-full flex-none order-3;

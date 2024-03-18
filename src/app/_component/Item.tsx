@@ -55,13 +55,8 @@ export default function Item({ id, index, children }: itemProps) {
   edit ? drag(drop(ref)) : drag(null);
 
   return (
-    <article
-      ref={ref}
-      className={`list-grid-item ${isDragging ? "draging" : ""} ${
-        edit ? "edit" : ""
-      }`}
-    >
+    <div ref={ref} className="edit-modal-box">
       {children}
-    </article>
+    </div>
   );
 }

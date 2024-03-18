@@ -22,19 +22,22 @@ export default function Page() {
 
   // 아이템을 렌더링하는 콜백 함수 정의
   const renderItem = useCallback((item: { id: number }, index: number) => {
-    const components = [
-      <Tv key="1" />,
-      <Movie key="2" />,
-      <Weather key="3" />,
-      <Poke key="4" />,
-    ];
+    const sample = ["Tv", "Movie", "Weather", "Poke"];
 
     return (
       <Item key={item.id} index={index} id={item.id}>
-        {components[item.id]}
+        {/* {components[item.id]} */}
+        <p>{sample[item.id]}</p>
       </Item>
     );
   }, []);
+
+  const components = [
+    <Tv key="1" />,
+    <Movie key="2" />,
+    <Weather key="3" />,
+    <Poke key="4" />,
+  ];
 
   // JSX 반환
   return (
@@ -43,19 +46,32 @@ export default function Page() {
       {/* React Query */}
       <QueryClientProvider client={queryClient}>
         {/* React Dnd Provider */}
-        <DndProvider options={HTML5toTouch}>
-          <section className="list-grid">
-            <h2 className="hidden">Main-Layout</h2>
-            {list.map((item, index) => renderItem(item, index))}
-          </section>
-        </DndProvider>
+        <section className="list-grid">
+          <h2 className="hidden">Main-Layout</h2>
+          {list.map((item, index) => (
+            <article className="list-grid-item" key={index}>
+              {components[item.id]}
+            </article>
+          ))}
+        </section>
       </QueryClientProvider>
-      {/* 편집 모드일 때 레이아웃 저장 버튼 표시 */}
-      {edit && (
-        <button className="list-save" onClick={() => setLayout(list)}>
-          레이아웃 저장
-        </button>
-      )}
+      {/* React Dnd Provider */}
+      <DndProvider options={HTML5toTouch}>
+        {edit && (
+          <div className="edit-modal">
+            <div className="edit-modal-con">
+              <p>위젯을 움직여 원하는 순서대로 변경해주세요.</p>
+              <div className="edit-modal-list">
+                {list.map((item, index) => renderItem(item, index))}
+              </div>
+              <button className="list-save" onClick={() => setLayout(list)}>
+                레이아웃 저장
+              </button>
+            </div>
+            <div className="edit-modal-backdrop"></div>
+          </div>
+        )}
+      </DndProvider>
     </main>
   );
 }
