@@ -30,7 +30,6 @@ export default function List({ data, type }: { data: any; type: string }) {
         disableOnInteraction: false,
       }}
       loop={true}
-      onSwiper={(swiper) => console.log(swiper)}
       modules={[Autoplay]}
     >
       {data.map((item: any, index: number) => {

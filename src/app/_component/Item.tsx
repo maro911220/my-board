@@ -55,7 +55,7 @@ export default function Item({ id, index, children }: itemProps) {
   edit ? drag(drop(ref)) : drag(null);
 
   return (
-    <div ref={ref} className="edit-modal-box">
+    <div ref={ref} className={`edit-modal-box ${isDragging ? "dragging" : ""}`}>
       {children}
     </div>
   );

@@ -1,7 +1,7 @@
 /* poke */
 .poke {
   container: poke / inline-size;
-  @apply flex flex-wrap flex-1 overflow-hidden;
+  @apply flex flex-1 overflow-hidden;
 
   &-title {
     @apply flex w-full justify-start text-base font-semibold mb-1;
@@ -58,13 +58,16 @@
 }
 
 /* container */
-@container poke (max-width: 907px) {
+@media (max-width: 999px) {
+  .poke {
+    @apply flex-col;
+  }
   .poke-box.type-stat {
-    @apply w-full flex-none border-0 p-0;
+    @apply w-full flex-none border-0 p-0 mt-[20px];
   }
 }
 
-@container poke (max-width: 350px) {
+@media (max-width: 450px) {
   .poke-main {
     @apply flex-col justify-center;
 

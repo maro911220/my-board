@@ -1,7 +1,6 @@
 /* weather */
 .weather {
-  container: weather / inline-size;
-  @apply flex flex-wrap flex-1 overflow-hidden;
+  @apply flex flex-1 overflow-hidden;
 
   // weather-title
   &-title {
@@ -97,36 +96,32 @@
   }
 }
 
-/* container */
-@container weather (max-width: 1000px) {
-  .weather-week {
-    @apply text-sm;
-    &-day {
-      @apply gap-2;
+/* media */
+@media (max-width: 999px) {
+  .weather {
+    @apply flex-col;
+    &-today {
+      @apply flex-none w-full;
     }
-    &-temp {
-      @apply gap-2;
-      p {
-        @apply w-[70px];
+    &-week {
+      @apply flex-none w-full p-0 border-0 text-sm mt-[20px];
+      &-day {
+        @apply gap-2;
+      }
+      &-temp {
+        @apply gap-2;
+        p {
+          @apply w-[70px];
+        }
+      }
+      &-item {
+        @apply px-0 py-2;
       }
     }
   }
 }
 
-@container weather (max-width: 907px) {
-  .weather-today {
-    @apply flex-auto;
-  }
-  .weather-week {
-    @apply flex-none w-full p-0 border-0 mt-[20px];
-
-    &-item {
-      @apply px-0 py-2;
-    }
-  }
-}
-
-@container weather (max-width: 400px) {
+@media (max-width: 500px) {
   .weather-week {
     @apply text-xs;
 

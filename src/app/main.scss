@@ -44,18 +44,24 @@
   @apply fixed flex top-0 left-0 right-0 bottom-0 z-10;
 
   &-con {
-    @apply relative z-10 flex flex-col gap-[20px] p-[20px] w-[420px] h-[520px] bg-stone-900 m-auto border rounded;
+    @apply relative z-10 flex flex-col gap-[20px] p-[20px] w-[340px] max-w-[calc(100%-20px)] h-[420px] bg-stone-900 m-auto border rounded;
+
+    & > p {
+      @apply break-keep;
+    }
   }
   &-list {
-    @apply flex-1 flex flex-col gap-[20px];
+    @apply flex-1 flex flex-col gap-[12px];
   }
   &-box {
-    @apply h-[25%] min-h-0 overflow-hidden text-2xl flex items-center justify-center bg-stone-800 cursor-move border border-dashed rounded;
+    @apply h-[25%] min-h-0 overflow-hidden text-xl flex items-center justify-center bg-stone-800 cursor-move border border-dashed rounded;
+    &.dragging {
+      @apply bg-stone-700;
+    }
   }
 
   .list-save {
-    @apply text-white font-semibold py-sm px-10 rounded bg-primary z-20;
-    @apply sm:text-2xl text-lg;
+    @apply text-white font-semibold py-sm px-10 rounded bg-primary z-20 text-lg;
   }
   &-backdrop {
     @apply absolute top-0 left-0 w-full h-full bg-stone-900/50 backdrop-blur-lg;

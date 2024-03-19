@@ -11,6 +11,7 @@ import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { motion, AnimatePresence } from "framer-motion";
 // 쿼리 클라이언트 생성
 const queryClient = new QueryClient();
 
@@ -57,20 +58,29 @@ export default function Page() {
       </QueryClientProvider>
       {/* React Dnd Provider */}
       <DndProvider options={HTML5toTouch}>
-        {edit && (
-          <div className="edit-modal">
-            <div className="edit-modal-con">
-              <p>위젯을 움직여 원하는 순서대로 변경해주세요.</p>
-              <div className="edit-modal-list">
-                {list.map((item, index) => renderItem(item, index))}
+        <AnimatePresence>
+          {edit && (
+            <motion.div className="edit-modal">
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 100 }}
+                className="edit-modal-con"
+              >
+                <p>위젯을 움직여 원하는 순서대로 변경해주세요.</p>
+                <div className="edit-modal-list">
+                  {list.map((item, index) => renderItem(item, index))}
+                </div>
+                <button className="list-save" onClick={() => setLayout(list)}>
+                  레이아웃 저장
+                </button>
+              </motion.div>
+              <div className="edit-modal-backdrop">
+                <span className="blind">background blur</span>
               </div>
-              <button className="list-save" onClick={() => setLayout(list)}>
-                레이아웃 저장
-              </button>
-            </div>
-            <div className="edit-modal-backdrop"></div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </DndProvider>
     </main>
   );
