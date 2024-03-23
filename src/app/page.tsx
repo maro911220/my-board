@@ -1,38 +1,24 @@
 "use client";
-import "./main.scss";
 import Item from "./_component/Item";
 import Movie from "./_component/(home)/movie/page";
 import Poke from "./_component/(home)/poke/page";
 import Weather from "./_component/(home)/weather/page";
 import Tv from "./_component/(home)/tv/page";
 import { useCallback, useEffect } from "react";
-import { DndProvider } from "react-dnd-multi-backend";
-import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DndProvider } from "react-dnd-multi-backend";
+import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { motion, AnimatePresence } from "framer-motion";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@/styles/main.scss";
+
 // 쿼리 클라이언트 생성
 const queryClient = new QueryClient();
 
-// 컴포넌트 선언
 export default function Page() {
   // Zustand를 사용하여 상태 및 액션을 가져오기
   const { edit, list, setLayout, setDefaultList } = useStore(defaultStore);
-  useEffect(() => setDefaultList(), [setDefaultList]);
-
-  // 아이템을 렌더링하는 콜백 함수 정의
-  const renderItem = useCallback((item: { id: number }, index: number) => {
-    const sample = ["Tv", "Movie", "Weather", "Poke"];
-
-    return (
-      <Item key={item.id} index={index} id={item.id}>
-        {/* {components[item.id]} */}
-        <p>{sample[item.id]}</p>
-      </Item>
-    );
-  }, []);
-
   const components = [
     <Tv key="1" />,
     <Movie key="2" />,
@@ -40,13 +26,22 @@ export default function Page() {
     <Poke key="4" />,
   ];
 
-  // JSX 반환
+  useEffect(() => setDefaultList(), [setDefaultList]);
+
+  // 아이템을 렌더링하는 콜백 함수 정의
+  const renderItem = useCallback((item: { id: number }, index: number) => {
+    return (
+      <Item key={item.id} index={index} id={item.id}>
+        <p>{["Tv", "Movie", "Weather", "Poke"][item.id]}</p>
+      </Item>
+    );
+  }, []);
+
   return (
     <main className="main">
       <h1 className="hidden">Main</h1>
       {/* React Query */}
       <QueryClientProvider client={queryClient}>
-        {/* React Dnd Provider */}
         <section className="list-grid">
           <h2 className="hidden">Main-Layout</h2>
           {list.map((item, index) => (

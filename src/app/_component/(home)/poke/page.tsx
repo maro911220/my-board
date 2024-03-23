@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import "./poke.scss";
+import "@/styles/component/home/poke.scss";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";

@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import "./mediaList.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import { motion } from "framer-motion";
+import "swiper/css";
+import "@/styles/page/mediaList.scss";
 
 export default function MediaList({ mediaData }: { mediaData: any }) {
   return (
@@ -13,6 +13,7 @@ export default function MediaList({ mediaData }: { mediaData: any }) {
       transition={{ duration: 0.5 }}
     >
       <h2 className="hidden">미디어 상세</h2>
+      {/* 상단 이미지, 영화 데이터 */}
       <article className="media-detail-con">
         <div className="media-detail-img">
           <img
@@ -48,6 +49,7 @@ export default function MediaList({ mediaData }: { mediaData: any }) {
           </div>
         </div>
       </article>
+      {/* 주요 출연진 */}
       <article className="media-detail-credits">
         <h3 className="media-detail-credits__title">주요 출연진</h3>
         <div className="flex">

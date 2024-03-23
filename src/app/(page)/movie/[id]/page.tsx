@@ -5,6 +5,7 @@ import { useQueries } from "@tanstack/react-query";
 import Loading from "@/app/_component/Loading";
 
 export default function Page(props: any) {
+  // ApiKey, title
   const API_KEY = process.env.TMDB;
   const title = decodeURI(props.params.id);
 

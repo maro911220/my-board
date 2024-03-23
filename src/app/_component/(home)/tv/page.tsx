@@ -7,10 +7,14 @@ import List from "@/app/_component/List";
 import Loading from "@/app/_component/Loading";
 
 export default function Tv() {
+  // 현재 날짜
   const date = dayjs().format("YYYY");
 
+  // API 키 설정, URL
   const API_KEY = process.env.TMDB;
   const url = `https://api.themoviedb.org/3/discover/tv`;
+
+  // TV 데이터 가져오기
   const { isPending, error, data } = useQuery({
     queryKey: ["tv"],
     queryFn: () =>

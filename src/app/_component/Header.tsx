@@ -1,14 +1,14 @@
 "use client";
-import "./header.scss";
+import { useEffect, useRef, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
 import isLeapYear from "dayjs/plugin/isLeapYear";
 import { BsGearFill, BsFillLightbulbFill } from "react-icons/bs";
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import "@/styles/component/header.scss";
 
 // Day.js 플러그인 확장, 한국어 설정
 dayjs.extend(isLeapYear);
@@ -20,6 +20,7 @@ export default function Header() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { setEdit, setTheme, checkTheme } = useStore(defaultStore);
   const [searchData, setSearchData] = useState("");
+
   // 편집 모드 활성화
   const editMode = () => setEdit(true);
   // 테바 변경
@@ -48,7 +49,7 @@ export default function Header() {
 
   // 엔터 키 이벤트 핸들러
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") search();
+    e.key === "Enter" && search();
   };
 
   return (

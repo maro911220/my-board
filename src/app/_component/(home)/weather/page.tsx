@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import "./weather.scss";
+import "@/styles/component/home/weather.scss";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useGeolocation } from "@uidotdev/usehooks";

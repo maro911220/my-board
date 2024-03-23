@@ -20,20 +20,20 @@
   }
 
   &-list {
-    @apply flex flex-col divide-y flex-1 mb-4 p-lg border rounded dark:bg-stone-800;
+    @apply flex flex-col flex-1 mb-4 gap-4;
     &-item {
-      @apply flex flex-col py-1 px-2 bg-list hover:bg-listHover hover:dark:bg-listHoverDark;
+      @apply flex flex-col p-4 rounded dark:bg-stone-800;
       & > div {
         @apply flex justify-between items-center text-sm mb-1;
         span:first-of-type {
-          @apply truncate;
+          @apply text-lg truncate;
         }
         span:last-of-type {
           @apply text-xs flex-none w-[90px];
         }
       }
       & > span {
-        @apply text-xs text-stone-400;
+        @apply text-stone-400;
       }
     }
   }

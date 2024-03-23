@@ -1,4 +1,5 @@
-import "./footer.scss";
+import "@/styles/component/footer.scss";
+
 export default function Footer() {
   return (
     <footer className="footer">
