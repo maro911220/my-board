@@ -1,10 +1,20 @@
 .search {
   &-con {
-    @apply w-full h-full flex flex-col;
+    @apply w-full h-full flex flex-col min-h-[calc(100vh-100px)];
+  }
+
+  &-tab {
+    @apply flex gap-2 mb-4;
+    button {
+      @apply text-lg border px-2 py-1 rounded;
+      &.active {
+        @apply text-white bg-primary border-primary;
+      }
+    }
   }
 
   &-btn {
-    @apply flex flex-none items-center gap-2 ml-auto text-sm font-normal;
+    @apply flex flex-none justify-center items-center gap-2 ml-auto text-sm font-normal;
     span {
       @apply inline-block w-[20px] text-center;
     }
@@ -22,19 +32,7 @@
   &-list {
     @apply flex flex-col flex-1 mb-4 gap-4;
     &-item {
-      @apply flex flex-col p-4 rounded dark:bg-stone-800;
-      & > div {
-        @apply flex justify-between items-center text-sm mb-1;
-        span:first-of-type {
-          @apply text-lg truncate;
-        }
-        span:last-of-type {
-          @apply text-xs flex-none w-[90px];
-        }
-      }
-      & > span {
-        @apply text-stone-400;
-      }
+      @apply flex flex-col p-4 rounded border dark:border-transparent dark:bg-stone-800;
     }
   }
 }

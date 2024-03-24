@@ -2,6 +2,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "@/app/_component/Loading";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 const API_KEY = process.env.KAKAO;
 
@@ -46,7 +48,11 @@ export default function Page({ title, type }: { title: string; type: string }) {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <article>
+    <motion.article
+      className="search-area"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <div className="search-list">
         {data.documents.length > 0 ? (
           // 검색 결과가 있을 경우 각 항목을 매핑하여 렌더링합니다.
@@ -56,6 +62,9 @@ export default function Page({ title, type }: { title: string; type: string }) {
             const contents = item.contents.replace(replaceWord, "");
             const title = item.title.replace(replaceWord, "");
             const datetime = item.datetime.slice(0, 10);
+            const thumbnail = item.thumbnail ? item.thumbnail : null;
+            const blogname = item.blogname ? item.blogname : null;
+            const cafename = item.cafename ? item.cafename : null;
 
             return (
               <a
@@ -65,10 +74,22 @@ export default function Page({ title, type }: { title: string; type: string }) {
                 key={index}
               >
                 <div>
+                  {blogname && <p>{blogname}</p>}
+                  {cafename && <p>{cafename}</p>}
                   <span>{title}</span>
-                  <span>| {datetime}</span>
                 </div>
-                <span>{contents}</span>
+                <div>
+                  <p>{contents}</p>
+                  {thumbnail && (
+                    <Image
+                      src={thumbnail}
+                      alt={title}
+                      width={100}
+                      height={100}
+                    />
+                  )}
+                </div>
+                <p>{datetime}</p>
               </a>
             );
           })
@@ -98,6 +119,6 @@ export default function Page({ title, type }: { title: string; type: string }) {
           Next
         </button>
       </div>
-    </article>
+    </motion.article>
   );
 }

@@ -5,6 +5,16 @@ const nextConfig = {
     KAKAO: process.env.KAKAO,
     TMDB: process.env.TMDB,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.kakaocdn.net",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

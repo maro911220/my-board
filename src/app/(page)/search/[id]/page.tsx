@@ -4,6 +4,7 @@ import "@/styles/page/search.scss";
 import SearchList from "../_component/SearchList";
 import { useEffect, useState } from "react";
 import Loading from "@/app/_component/Loading";
+import { AnimatePresence } from "framer-motion";
 
 export default function Page(props: any) {
   const title = decodeURI(props.params.id);
@@ -18,15 +19,31 @@ export default function Page(props: any) {
     return () => setLoad(false);
   }, [type]);
 
+  const tabList = [
+    { type: "web", name: "웹문서" },
+    { type: "blog", name: "블로그" },
+    { type: "cafe", name: "카페" },
+  ];
+
   return (
     <section className="search-con" onClick={(e) => e.stopPropagation()}>
       <h2 className="hidden">검색 상세</h2>
-      <div>
-        <button onClick={() => typeChange("web")}>웹문서</button>
-        <button onClick={() => typeChange("blog")}>블로그</button>
-        <button onClick={() => typeChange("cafe")}>카페</button>
+      <div className="search-tab">
+        {tabList.map((item: any, index: number) => {
+          return (
+            <button
+              key={index}
+              className={type == item.type ? "active" : ""}
+              onClick={() => typeChange(item.type)}
+            >
+              {item.name}
+            </button>
+          );
+        })}
       </div>
-      {load ? <SearchList title={title} type={type} /> : <Loading />}
+      <AnimatePresence>
+        {load ? <SearchList title={title} type={type} /> : <Loading />}
+      </AnimatePresence>
     </section>
   );
 }
