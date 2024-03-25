@@ -13,6 +13,18 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "**.tmdb.org",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.themoviedb.org",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

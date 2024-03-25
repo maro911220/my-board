@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 import { Swiper, SwiperSlide } from "swiper/react";
 import { motion } from "framer-motion";
 import "swiper/css";
 import "@/styles/page/mediaList.scss";
+import Image from "next/image";
 
 export default function MediaList({ mediaData }: { mediaData: any }) {
   return (
@@ -16,9 +16,11 @@ export default function MediaList({ mediaData }: { mediaData: any }) {
       {/* 상단 이미지, 영화 데이터 */}
       <article className="media-detail-con">
         <div className="media-detail-img">
-          <img
+          <Image
             src={`https://image.tmdb.org/t/p/w500/${mediaData.poster}`}
             alt={mediaData.title}
+            width={500}
+            height={500}
           />
         </div>
         <div className="media-detail-text">
@@ -64,9 +66,11 @@ export default function MediaList({ mediaData }: { mediaData: any }) {
                 return (
                   item.profile_path && (
                     <SwiperSlide key={index}>
-                      <img
+                      <Image
                         src={`https://media.themoviedb.org/t/p/w138_and_h175_face/${item.profile_path}.jpg`}
                         alt={item.name}
+                        width={200}
+                        height={200}
                       />
                       <p>{item.name}</p>
                     </SwiperSlide>

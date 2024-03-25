@@ -33,6 +33,25 @@
     @apply flex flex-col flex-1 mb-4 gap-4;
     &-item {
       @apply flex flex-col p-4 rounded border dark:border-transparent dark:bg-stone-800;
+      &__top {
+        @apply flex flex-col mb-2;
+        span {
+          @apply text-xs text-stone-500;
+        }
+        p {
+          @apply text-lg font-medium mt-1;
+        }
+      }
+
+      &__content {
+        @apply flex;
+        p {
+          @apply flex-1;
+        }
+        img {
+          @apply flex-none w-[80px] h-[80px] object-contain rounded mr-4;
+        }
+      }
     }
   }
 }

@@ -16,6 +16,11 @@ export default function Page({ title, type }: { title: string; type: string }) {
     setCurrentPage(1);
   }, [type]);
 
+  // 검색어가 바뀌면 적용
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [title]);
+
   // 데이터를 가져오는 함수
   const fetchData = async (num: number) => {
     return await axios
@@ -34,7 +39,6 @@ export default function Page({ title, type }: { title: string; type: string }) {
       queryFn: () => fetchData(num),
       staleTime: 1,
     });
-
     window.scrollTo(0, 0);
   };
   // 데이터를 가져오는 React Query 훅
@@ -65,6 +69,7 @@ export default function Page({ title, type }: { title: string; type: string }) {
             const thumbnail = item.thumbnail ? item.thumbnail : null;
             const blogname = item.blogname ? item.blogname : null;
             const cafename = item.cafename ? item.cafename : null;
+            const shortUrl = item.url.split("//")[1]?.split("/")[0];
 
             return (
               <a
@@ -73,23 +78,28 @@ export default function Page({ title, type }: { title: string; type: string }) {
                 target="_blank"
                 key={index}
               >
-                <div>
-                  {blogname && <p>{blogname}</p>}
-                  {cafename && <p>{cafename}</p>}
-                  <span>{title}</span>
+                <div className="search-list-item__top">
+                  <span className="search-list-item__date">{datetime}</span>
+                  {blogname ? (
+                    <span>{`${shortUrl} / ${blogname}`}</span>
+                  ) : cafename ? (
+                    <span>{`${shortUrl} / ${cafename}`}</span>
+                  ) : (
+                    <span>{shortUrl}</span>
+                  )}
+                  <p>{title}</p>
                 </div>
-                <div>
-                  <p>{contents}</p>
+                <div className="search-list-item__content">
                   {thumbnail && (
                     <Image
                       src={thumbnail}
                       alt={title}
-                      width={100}
-                      height={100}
+                      width={128}
+                      height={128}
                     />
                   )}
+                  <p>{contents}</p>
                 </div>
-                <p>{datetime}</p>
               </a>
             );
           })
