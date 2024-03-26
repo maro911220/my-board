@@ -2,6 +2,7 @@
 "use client";
 import "@/styles/page/search.scss";
 import SearchList from "../_component/SearchList";
+import SearchMain from "../_component/SearchMain";
 import { useEffect, useState } from "react";
 import Loading from "@/app/_component/Loading";
 import { AnimatePresence } from "framer-motion";
@@ -9,7 +10,7 @@ import { AnimatePresence } from "framer-motion";
 export default function Page(props: any) {
   const title = decodeURI(props.params.id);
   const [load, setLoad] = useState(true);
-  const [type, setType] = useState("web");
+  const [type, setType] = useState("main");
   const typeChange = (e: string) => setType(e);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function Page(props: any) {
   }, [type]);
 
   const tabList = [
+    { type: "main", name: "전체" },
     { type: "web", name: "웹문서" },
     { type: "blog", name: "블로그" },
     { type: "cafe", name: "카페" },
@@ -42,7 +44,13 @@ export default function Page(props: any) {
         })}
       </div>
       <AnimatePresence>
-        {load ? <SearchList title={title} type={type} /> : <Loading />}
+        {!load ? (
+          <Loading />
+        ) : type === "main" ? (
+          <SearchMain title={title} />
+        ) : (
+          <SearchList title={title} type={type} />
+        )}
       </AnimatePresence>
     </section>
   );

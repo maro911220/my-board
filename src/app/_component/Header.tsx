@@ -33,6 +33,7 @@ export default function Header() {
       inputRef.current?.focus();
       setSearchData("");
     } else {
+      inputRef.current?.blur();
       router.push(`/search/${searchData}`);
     }
   };
@@ -74,9 +75,11 @@ export default function Header() {
           </button>
         </div>
         <div className="header-btn">
-          <button onClick={editMode}>
-            <BsGearFill />
-          </button>
+          {pathname === "/" && (
+            <button onClick={editMode}>
+              <BsGearFill />
+            </button>
+          )}
           <button onClick={modeToggle}>
             <BsFillLightbulbFill />
           </button>

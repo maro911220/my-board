@@ -4,6 +4,7 @@ import Loading from "@/app/_component/Loading";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import ListItem from "./ListItem";
 
 const API_KEY = process.env.KAKAO;
 
@@ -61,47 +62,7 @@ export default function Page({ title, type }: { title: string; type: string }) {
         {data.documents.length > 0 ? (
           // 검색 결과가 있을 경우 각 항목을 매핑하여 렌더링합니다.
           data.documents.map((item: any, index: number) => {
-            // 정규식을 이용하여 컨텐츠와 제목에서 HTML 태그 제거.
-            const replaceWord = /[<b\>{\}\[\]\/\\\=\(\'\"/&#39;]/g;
-            const contents = item.contents.replace(replaceWord, "");
-            const title = item.title.replace(replaceWord, "");
-            const datetime = item.datetime.slice(0, 10);
-            const thumbnail = item.thumbnail ? item.thumbnail : null;
-            const blogname = item.blogname ? item.blogname : null;
-            const cafename = item.cafename ? item.cafename : null;
-            const shortUrl = item.url.split("//")[1]?.split("/")[0];
-
-            return (
-              <a
-                className="search-list-item"
-                href={item.url}
-                target="_blank"
-                key={index}
-              >
-                <div className="search-list-item__top">
-                  <span className="search-list-item__date">{datetime}</span>
-                  {blogname ? (
-                    <span>{`${shortUrl} / ${blogname}`}</span>
-                  ) : cafename ? (
-                    <span>{`${shortUrl} / ${cafename}`}</span>
-                  ) : (
-                    <span>{shortUrl}</span>
-                  )}
-                  <p>{title}</p>
-                </div>
-                <div className="search-list-item__content">
-                  {thumbnail && (
-                    <Image
-                      src={thumbnail}
-                      alt={title}
-                      width={128}
-                      height={128}
-                    />
-                  )}
-                  <p>{contents}</p>
-                </div>
-              </a>
-            );
+            return <ListItem item={item} key={index} />;
           })
         ) : (
           // 검색 결과가 없을 경우 메시지를 표시합니다.
