@@ -22,7 +22,7 @@ export default function Page({ title }: { title: string }) {
 
   const results = useQueries({
     queries: ids.map((id) => ({
-      queryKey: [`main-${id}`],
+      queryKey: [`${title}-${id}`],
       queryFn: () =>
         axios.get(id, {
           params: { query: title, size: 4 },
@@ -37,7 +37,7 @@ export default function Page({ title }: { title: string }) {
   const webData = results[0].data?.data;
   const blogData = results[1].data?.data;
   const cafeData = results[2].data?.data;
-  console.log(results.length);
+
   // Loading & Error
   if (results[results.length - 1].isPending) return <Loading />;
   if (results[0].error)
