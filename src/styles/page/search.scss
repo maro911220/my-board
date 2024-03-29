@@ -12,6 +12,12 @@
         @apply text-white bg-primary hover:bg-primary border-primary;
       }
     }
+    @media (max-width: 999px) {
+      @apply flex-wrap;
+      button {
+        @apply text-base;
+      }
+    }
   }
 
   &-btn {
@@ -54,7 +60,7 @@
       &__content {
         @apply flex;
         p {
-          @apply flex-1;
+          @apply flex-1 break-words;
         }
         img {
           @apply flex-none w-[80px] h-[80px] object-contain rounded mr-4;
@@ -81,6 +87,16 @@
         img {
           @apply w-full transition-all hover:scale-105;
         }
+      }
+
+      @media (max-width: 999px) {
+        @apply grid-cols-5;
+      }
+      @media (max-width: 799px) {
+        @apply grid-cols-4;
+      }
+      @media (max-width: 599px) {
+        @apply grid-cols-2;
       }
     }
   }
