@@ -10,7 +10,7 @@
 
 ## 배포 주소
 
-[https://maro-board.vercel.app/](<(https://maro-board.vercel.app/)>)
+[https://maro-board.vercel.app/](https://maro-board.vercel.app/)
 
 ## 시작 가이드
 
