@@ -11,6 +11,7 @@ import { DndProvider } from "react-dnd-multi-backend";
 import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { motion, AnimatePresence } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Image from "next/image";
 import "@/styles/main.scss";
 
 // 쿼리 클라이언트 생성
@@ -30,9 +31,16 @@ export default function Page() {
 
   // 아이템을 렌더링하는 콜백 함수 정의
   const renderItem = useCallback((item: { id: number }, index: number) => {
+    const data = ["tv", "movie", "weather", "poke"];
     return (
       <Item key={item.id} index={index} id={item.id}>
-        <p>{["Tv", "Movie", "Weather", "Poke"][item.id]}</p>
+        <Image
+          src={`/img/set/${data[item.id]}.png`}
+          alt="poke"
+          width={28}
+          height={28}
+        />
+        <p>{data[item.id]}</p>
       </Item>
     );
   }, []);

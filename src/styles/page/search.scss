@@ -7,8 +7,9 @@
     @apply flex gap-2 mb-4;
     button {
       @apply text-lg border px-2 py-1 rounded;
+      @apply hover:bg-stone-50 hover:dark:bg-stone-700;
       &.active {
-        @apply text-white bg-primary border-primary;
+        @apply text-white bg-primary hover:bg-primary border-primary;
       }
     }
   }
@@ -31,8 +32,15 @@
 
   &-list {
     @apply flex flex-col flex-1 mb-4 gap-4;
+    &:not(:last-of-type) {
+      @apply mb-12;
+    }
+    &-title {
+      @apply text-xl font-medium;
+    }
     &-item {
       @apply flex flex-col p-4 rounded border dark:border-transparent dark:bg-stone-800;
+      @apply hover:bg-stone-50 hover:dark:bg-stone-700;
       &__top {
         @apply flex flex-col mb-2;
         span {
@@ -50,6 +58,28 @@
         }
         img {
           @apply flex-none w-[80px] h-[80px] object-contain rounded mr-4;
+        }
+      }
+    }
+
+    &-img {
+      @apply w-auto rounded overflow-hidden border #{!important};
+      img {
+        @apply transition-all hover:scale-105;
+      }
+    }
+
+    &-more {
+      @apply border p-2 rounded dark:bg-stone-800 dark:border-transparent;
+      @apply hover:bg-stone-50 hover:dark:bg-stone-700;
+    }
+
+    &.image {
+      @apply grid grid-cols-8 gap-2;
+      a {
+        @apply rounded overflow-hidden border;
+        img {
+          @apply w-full transition-all hover:scale-105;
         }
       }
     }

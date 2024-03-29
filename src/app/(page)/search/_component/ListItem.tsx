@@ -2,13 +2,13 @@ import Image from "next/image";
 
 export default function ListItem({ item }: { item: any }) {
   const replaceWord = /[<b\>{\}\[\]\/\\\=\(\'\"/&#39;]/g;
-  const contents = item.contents.replace(replaceWord, "");
-  const title = item.title.replace(replaceWord, "");
-  const datetime = item.datetime.slice(0, 10);
+  const contents = item.contents?.replace(replaceWord, "");
+  const title = item.title?.replace(replaceWord, "");
+  const datetime = item.datetime?.slice(0, 10);
   const thumbnail = item.thumbnail ? item.thumbnail : null;
   const blogname = item.blogname ? item.blogname : null;
   const cafename = item.cafename ? item.cafename : null;
-  const shortUrl = item.url.split("//")[1]?.split("/")[0];
+  const shortUrl = item.url?.split("//")[1]?.split("/")[0];
 
   return (
     <a className="search-list-item" href={item.url} target="_blank">

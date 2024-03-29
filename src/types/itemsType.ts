@@ -12,3 +12,13 @@ export interface DragItemProps {
 export interface Reactchildren {
   children: React.ReactNode;
 }
+
+export interface SearcMainhProps {
+  title: string;
+  setType: any;
+}
+
+export interface SearchItemProps {
+  title: string;
+  type: string;
+}

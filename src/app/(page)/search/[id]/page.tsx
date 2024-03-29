@@ -16,12 +16,13 @@ export default function Page(props: any) {
   useEffect(() => {
     setTimeout(() => {
       setLoad(true);
-    }, 100);
+    }, 500);
     return () => setLoad(false);
   }, [type]);
 
   const tabList = [
     { type: "main", name: "전체" },
+    { type: "image", name: "이미지" },
     { type: "web", name: "웹문서" },
     { type: "blog", name: "블로그" },
     { type: "cafe", name: "카페" },
@@ -47,7 +48,7 @@ export default function Page(props: any) {
         {!load ? (
           <Loading />
         ) : type === "main" ? (
-          <SearchMain title={title} />
+          <SearchMain title={title} setType={setType} />
         ) : (
           <SearchList title={title} type={type} />
         )}
