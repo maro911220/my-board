@@ -57,6 +57,9 @@
   &-box {
     @apply relative h-[25%] min-h-0 overflow-hidden text-xl flex items-center justify-center bg-stone-100 cursor-move border border-dashed rounded;
     @apply dark:bg-stone-800;
+    &:nth-of-type(n + 5) {
+      @apply hidden;
+    }
     img {
       @apply absolute left-4 top-4;
     }
