@@ -14,6 +14,8 @@
 
 ## 시작 가이드
 
+- 프로젝트를 실행하기 위해서는 (themoviedb,카카오,openweathermap) API 키가 필요합니다.
+
 ```bash
 npm run dev
 # or
