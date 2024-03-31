@@ -61,6 +61,7 @@ export default function Page() {
 
   // Loading 처리
   if (results[0].isPending || results[1].isPending) return <Loading />;
+  if (results[0].error || results[1].error) return "An error";
 
   // Loading 이후 데이터 적용
   const findDataByLanguage = (data: any) =>
