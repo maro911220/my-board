@@ -21,7 +21,7 @@ export default function Page() {
 
   // 랜덤 포켓몬 번호를 생성합니다.
   function getRandomPoke() {
-    return Math.floor(Math.random() * 900).toString();
+    return Math.floor(Math.random() * 750).toString();
   }
 
   // 새로운 데이터를 설정합니다.
@@ -60,8 +60,8 @@ export default function Page() {
   const speciesData = results[1].data?.data;
 
   // Loading 처리
-  if (results[0].isPending || results[1].isPending) return <Loading />;
-  if (results[0].error || results[1].error) return "An error";
+  if (results[1].isPending) return <Loading />;
+  if (results[1].error) return "포켓몬을 불러오는데 실패했습니다.";
 
   // Loading 이후 데이터 적용
   const findDataByLanguage = (data: any) =>
