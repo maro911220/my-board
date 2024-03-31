@@ -54,12 +54,12 @@ export default function Page() {
     })),
   });
 
+  // Loading 처리
+  if (results[1].isPending) return <Loading />;
+
   // 포켓몬 정보 및 종류 가져오기
   const pokemonData = results[0].data?.data;
   const speciesData = results[1].data?.data;
-
-  // Loading 처리
-  if (results[0].isPending || results[1].isPending) return <Loading />;
 
   // Loading 이후 데이터 적용
   const findDataByLanguage = (data: any) =>

@@ -23,32 +23,29 @@ const API_KEY = process.env.WEATHER;
 // Weather 컴포넌트 정의
 export default function Weather() {
   // 현재 위치 가져오기
-  const { latitude, longitude, error } = useGeolocation();
-  let latitudes = latitude ? latitude : 0;
-  let longitudes = longitude ? longitude : 0;
-
+  const { latitude, longitude, error, loading } = useGeolocation();
   // API 호출을 위한 URL 설정
   const ids = [
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${latitudes}&lon=${longitudes}&exclude=alerts&appid=${API_KEY}&units=metric`,
-    `https://api.openweathermap.org/data/2.5/forecast?lat=${latitudes}&lon=${longitudes}&appid=${API_KEY}&units=metric`,
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`,
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
   ];
 
   // API 호출 및 데이터 가져오기
   const results = useQueries({
-    queries: ids.map((id) => ({
+    queries: ids?.map((id) => ({
       queryKey: ["weather", id],
       queryFn: () => axios.get(id),
       staleTime: Infinity,
+      enabled: latitude != null,
     })),
   });
-
-  const weatherDay = results[0].data?.data;
-  const weatherTime = results[1].data?.data;
 
   // 위치 정보 에러
   if (error) return <p>위치동의가 필요합니다.</p>;
   // API 데이터 로딩
-  if (results[0].isPending || results[1].isPending) return <Loading />;
+  if (loading || results[1].isPending) return <Loading />;
+  const weatherDay = results[0].data?.data;
+  const weatherTime = results[1].data?.data;
 
   return (
     <>
