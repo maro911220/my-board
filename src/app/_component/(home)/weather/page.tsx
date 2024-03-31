@@ -43,7 +43,7 @@ export default function Weather() {
   // 위치 정보 에러
   if (error) return <p>위치동의가 필요합니다.</p>;
   // API 데이터 로딩
-  if (loading || results[1].isPending) return <Loading />;
+  if (results[0].isPending || results[1].isPending) return <Loading />;
   const weatherDay = results[0].data?.data;
   const weatherTime = results[1].data?.data;
 
