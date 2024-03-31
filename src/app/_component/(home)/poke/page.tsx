@@ -51,6 +51,7 @@ export default function Page() {
       queryKey: ["pokemon", id],
       queryFn: () => axios.get(id),
       staleTime: Infinity,
+      enabled: localPoke != null,
     })),
   });
 
