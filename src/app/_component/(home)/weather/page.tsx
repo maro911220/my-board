@@ -44,6 +44,9 @@ export default function Weather() {
   if (error) return <p>위치동의가 필요합니다.</p>;
   // API 데이터 로딩
   if (results[0].isPending || results[1].isPending) return <Loading />;
+  if (results[0].isError || results[1].isError)
+    return "날씨 정보를 불러오는데 실패했습니다.";
+
   const weatherDay = results[0].data?.data;
   const weatherTime = results[1].data?.data;
 

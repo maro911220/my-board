@@ -23,7 +23,7 @@ export default function Movie() {
 
   // Loading & Error
   if (isPending) return <Loading />;
-  if (error) return "영화를 불러오는데 실패했습니다.";
+  if (error) return "영화 정보를 불러오는데 실패했습니다.";
 
   return (
     <>

@@ -43,9 +43,9 @@ export default function Page(props: any) {
   };
 
   // Loading & Error
-  if (results[0].isPending) return <Loading />;
-  if (results[0].error) return "An error has occurred: ";
-  console.log(creditsData);
+  if (results[0].isPending || results[1].isPending) return <Loading />;
+  if (results[0].error || results[1].error)
+    return "정보를 불러오는데 실패했습니다.";
 
   return data && <MediaList mediaData={mediaData} />;
 }

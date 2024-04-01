@@ -62,7 +62,7 @@ export default function Page({ title, type }: SearchItemProps) {
 
   // Loading & Error
   if (isPending) return <Loading />;
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return "정보를 불러오는데 실패했습니다.";
 
   return load ? (
     <motion.article

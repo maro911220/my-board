@@ -40,9 +40,21 @@ export default function Page({ title, setType }: SearcMainhProps) {
   });
 
   // Loading & Error
-  if (results[results.length - 1].isPending) return <Loading />;
-  if (results[0].error)
-    return "An error has occurred: " + results[0].error.message;
+  if (
+    results[0].isPending ||
+    results[1].isPending ||
+    results[2].isPending ||
+    results[3].isPending
+  )
+    return <Loading />;
+  if (
+    results[0].error ||
+    results[1].error ||
+    results[2].error ||
+    results[3].error
+  )
+    return "정보를 불러오는데 실패했습니다.";
+  console.log(results);
 
   return (
     <motion.article
