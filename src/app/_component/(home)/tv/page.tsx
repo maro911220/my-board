@@ -34,12 +34,23 @@ export default function Tv() {
   if (isPending) return <Loading />;
   if (error) return "방송 정보를 불러오는데 실패했습니다.";
 
+  // 불러온 데이터에서 필요한 데이터 정리
+  const listDatas = [
+    ...data.results.map((item: any) => {
+      return {
+        title: item.original_name,
+        id: item.id,
+        poster_path: item.poster_path,
+      };
+    }),
+  ];
+
   return (
     <>
       <h3 className="text-xl font-bold uppercase leading-4 mb-4">TV</h3>
       <div className="media">
         <p className="media-title">국내 인기 방송</p>
-        <List data={data.results} type="tv" />
+        <List data={listDatas} type="tv" />
       </div>
     </>
   );

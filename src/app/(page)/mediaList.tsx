@@ -56,12 +56,7 @@ export default function MediaList({ mediaData }: { mediaData: any }) {
         <h3 className="media-detail-credits__title">주요 출연진</h3>
         <div className="flex">
           {mediaData.credits?.length !== 0 ? (
-            <Swiper
-              spaceBetween={12}
-              slidesPerView="auto"
-              loop={true}
-              onSwiper={(swiper) => console.log(swiper)}
-            >
+            <Swiper spaceBetween={12} slidesPerView="auto" loop={true}>
               {mediaData.credits?.map((item: any, index: number) => {
                 return (
                   item.profile_path && (

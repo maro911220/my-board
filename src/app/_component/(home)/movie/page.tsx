@@ -25,12 +25,23 @@ export default function Movie() {
   if (isPending) return <Loading />;
   if (error) return "영화 정보를 불러오는데 실패했습니다.";
 
+  // 불러온 데이터에서 필요한 데이터 정리
+  const listDatas = [
+    ...data.results.map((item: any) => {
+      return {
+        title: item.title,
+        id: item.id,
+        poster_path: item.poster_path,
+      };
+    }),
+  ];
+
   return (
     <>
       <h3 className="text-xl font-bold uppercase leading-4 mb-4">Movie</h3>
       <div className="media">
         <p className="media-title">최신 영화</p>
-        <List data={data.results} type="movie" />
+        <List data={listDatas} type="movie" />
       </div>
     </>
   );

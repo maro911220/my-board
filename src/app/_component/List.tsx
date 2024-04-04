@@ -7,8 +7,15 @@ import { defaultStore } from "@/store/store";
 import { useStore } from "zustand";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { mainMediaProps } from "@/types/itemsType";
 
-export default function List({ data, type }: { data: any; type: string }) {
+export default function List({
+  data,
+  type,
+}: {
+  data: mainMediaProps[];
+  type: string;
+}) {
   const { edit } = useStore(defaultStore);
   const swiperRef = useRef<any>(null);
 
@@ -36,20 +43,18 @@ export default function List({ data, type }: { data: any; type: string }) {
       modules={[Autoplay]}
     >
       {data.map((item: any, index: number) => {
-        const title = item.title ? item.title : item.original_name;
         return (
           <SwiperSlide key={index} className="media-list-item">
-            {/* 각 항목에 대한 세부 정보 페이지 링크 */}
             <Link href={`/${type}/${item.id}`}>
               <div>
                 <Image
                   src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-                  alt={title}
+                  alt={item.title}
                   width={500}
                   height={500}
                 />
               </div>
-              <p>{title}</p>
+              <p>{item.title}</p>
             </Link>
           </SwiperSlide>
         );

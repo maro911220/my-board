@@ -7,6 +7,7 @@ import { useGeolocation } from "@uidotdev/usehooks";
 import { useQueries } from "@tanstack/react-query";
 import Charts from "./_component/chart";
 import Loading from "@/app/_component/Loading";
+import { dayDatasProps, timeDatasProps } from "@/types/itemsType";
 
 // 날씨 상태에 따른 정보 객체
 const weatherDescriptions: any = {
@@ -23,7 +24,7 @@ const API_KEY = process.env.WEATHER;
 // Weather 컴포넌트 정의
 export default function Weather() {
   // 현재 위치 가져오기
-  const { latitude, longitude, error, loading } = useGeolocation();
+  const { latitude, longitude, error } = useGeolocation();
   // API 호출을 위한 URL 설정
   const ids = [
     `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`,
@@ -47,14 +48,40 @@ export default function Weather() {
   if (results[0].isError || results[1].isError)
     return "날씨 정보를 불러오는데 실패했습니다.";
 
+  // 불러온 데이터에서 필요한 데이터 정리
   const weatherDay = results[0].data?.data;
   const weatherTime = results[1].data?.data;
+
+  // 일간 데이터
+  const dayDatas = [
+    ...weatherDay.daily.map((item: any) => {
+      return {
+        dayWeather: item.weather[0].main,
+        temp_min: item.temp.min,
+        temp_max: item.temp.max,
+        temp: item.temp.day,
+        rain: item.temp.rain,
+      };
+    }),
+  ];
+
+  // 시간 데이터
+  const fitTimeList = weatherTime.list.slice(3).slice(0, 5);
+  const timeDatas = [
+    ...fitTimeList.map((item: any) => {
+      return {
+        dayWeather: item.weather[0].main,
+        temp: item.main.temp,
+        day: item.dt_txt,
+      };
+    }),
+  ];
 
   return (
     <>
       <h3 className="text-xl font-bold uppercase leading-4 mb-4">Weather</h3>
       <div className="weather">
-        <Days weatherDay={weatherDay} weatherTime={weatherTime} />
+        <Days dayDatas={dayDatas} timeDatas={timeDatas} />
       </div>
     </>
   );
@@ -62,11 +89,11 @@ export default function Weather() {
 
 // 날씨 정보 출력 컴포넌트
 function Days({
-  weatherDay,
-  weatherTime,
+  dayDatas,
+  timeDatas,
 }: {
-  weatherDay: any;
-  weatherTime: any;
+  dayDatas: dayDatasProps[];
+  timeDatas: timeDatasProps[];
 }) {
   // 날씨 아이콘을 렌더링 함수
   const renderWeatherIcon = (weather: string, classes: Boolean, index: any) => (
@@ -82,10 +109,10 @@ function Days({
 
   // 주간 날씨 정보 렌더링
   const renderWeatherForecast = () => {
-    return weatherDay.daily.slice(1).map((day: any, index: number) => (
+    return dayDatas.slice(1).map((day: dayDatasProps, index: number) => (
       <div className="weather-week-item" key={index}>
         <div className="weather-week-day">
-          {renderWeatherIcon(day.weather[0].main, false, null)}
+          {renderWeatherIcon(day.dayWeather, false, null)}
           <p>
             {dayjs()
               .add(index + 1, "day")
@@ -94,10 +121,10 @@ function Days({
         </div>
         <div className="weather-week-temp">
           <p>
-            최저 <span>{day.temp.min.toFixed(1)}°</span>
+            최저 <span>{day.temp_min.toFixed(1)}°</span>
           </p>
           <p>
-            최고 <span>{day.temp.max.toFixed(1)}°</span>
+            최고 <span>{day.temp_max.toFixed(1)}°</span>
           </p>
         </div>
       </div>
@@ -106,33 +133,31 @@ function Days({
 
   // 오늘 날씨 정보 렌더링
   const renderWeatherToday = () => {
-    const dayItem = weatherDay.daily[0];
+    const dayItem = dayDatas[0];
     return (
       <div className="weather-today-box">
         <div className="flex items-center">
-          {renderWeatherIcon(dayItem.weather[0].main, true, null)}
+          {renderWeatherIcon(dayItem.dayWeather, true, null)}
           <p className="weather-today-temp">
-            {parseFloat(dayItem.temp.day).toFixed(1)}°
-            <span className="weather-today-name">
-              {dayItem.weather[0].main}
-            </span>
+            {dayItem.temp.toFixed(1)}°
+            <span className="weather-today-name">{dayItem.dayWeather}</span>
           </p>
         </div>
 
         <div>
           <div className="weather-today-box__con">
             <p className="weather-today-temp__min">
-              <span>{parseFloat(dayItem.temp.min).toFixed(1)}°</span>
+              <span>{dayItem.temp_min.toFixed(1)}°</span>
             </p>
             <p>/</p>
             <p className="weather-today-temp__max">
-              <span>{parseFloat(dayItem.temp.max).toFixed(1)}°</span>
+              <span>{dayItem.temp_max.toFixed(1)}°</span>
             </p>
           </div>
           <p className="weather-today-rain">
             예상 강수량
             <span>
-              {dayItem.rain == null ? 0 : parseFloat(dayItem.rain).toFixed(0)}
+              {dayItem.rain == null ? 0 : dayItem.rain.toFixed(0)}
               mm
             </span>
           </p>
@@ -143,13 +168,12 @@ function Days({
 
   // 시간별 날씨 정보 렌더링
   const renderWeatherTime = () => {
-    const fitTimeList = weatherTime.list.slice(3).slice(0, 5);
     return (
       <div className="weather-time">
-        <Charts fitTimeList={fitTimeList} />
+        <Charts fitTimeList={timeDatas} />
         <div className="weather-time__icon">
-          {fitTimeList.map((item: any, index: number) => {
-            return renderWeatherIcon(item.weather[0].main, false, index);
+          {timeDatas.map((item: any, index: number) => {
+            return renderWeatherIcon(item.dayWeather, false, index);
           })}
         </div>
       </div>

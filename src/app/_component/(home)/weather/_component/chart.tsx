@@ -11,6 +11,7 @@ import { Line } from "react-chartjs-2";
 import { useStore } from "zustand";
 import { defaultStore } from "@/store/store";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { timeDatasProps } from "@/types/itemsType";
 
 // ChartJS에 필요한 요소 등록
 ChartJS.register(
@@ -23,13 +24,17 @@ ChartJS.register(
 );
 
 // Charts 컴포넌트 정의
-export default function Charts({ fitTimeList }: { fitTimeList: any }) {
+export default function Charts({
+  fitTimeList,
+}: {
+  fitTimeList: timeDatasProps[];
+}) {
   // Zustand를 사용하여 테마 정보 가져오기
   // fitTimeList의 각 항목을 매핑하여 적절한 데이터로 변환
   const { theme } = useStore(defaultStore);
   const mappedData = fitTimeList.map((item: any) => ({
-    temperature: item.main.temp,
-    time: item.dt_txt.slice(-8).slice(0, 2) + "시",
+    temperature: item.temp,
+    time: item.day.slice(-8).slice(0, 2) + "시",
   }));
 
   // 테마에 따라 틱 색상 설정

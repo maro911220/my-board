@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useQueries } from "@tanstack/react-query";
 import Loading from "@/app/_component/Loading";
+import { pokeProps, pokeStatProps } from "@/types/itemsType";
 
 export default function Page() {
   // 현재 날짜와 시간을 가져옵니다.
@@ -68,13 +69,16 @@ export default function Page() {
   const findDataByLanguage = (data: any) =>
     data.find((item: any) => item.language.name === "ko");
 
-  const pokename = findDataByLanguage(speciesData.names).name;
-  const pokeGenus = findDataByLanguage(speciesData.genera).genus;
-  const pokeFlavor = findDataByLanguage(
-    speciesData.flavor_text_entries
-  ).flavor_text;
-
-  const pokeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${localPoke}.png`;
+  const listDatas: pokeProps = {
+    title: pokemonData.title,
+    id: pokemonData.id,
+    height: pokemonData.height,
+    weight: pokemonData.weight,
+    pokeImg: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${localPoke}.png`,
+    pokename: findDataByLanguage(speciesData.names).name,
+    pokeGenus: findDataByLanguage(speciesData.genera).genus,
+    pokeFlavor: findDataByLanguage(speciesData.flavor_text_entries).flavor_text,
+  };
 
   return (
     <>
@@ -83,25 +87,29 @@ export default function Page() {
         <div className="poke-box">
           <p className="poke-title">오늘의 럭키 포켓몬</p>
           <div className="poke-main">
-            <img className="poke-main-img" src={pokeImg} alt={pokename} />
+            <img
+              className="poke-main-img"
+              src={listDatas.pokeImg}
+              alt={listDatas.pokename}
+            />
             <div className="poke-main-detail">
-              <p className="poke-main-detail__name">{pokename}</p>
+              <p className="poke-main-detail__name">{listDatas.pokename}</p>
               <div>
-                <p>No.{pokemonData.id}</p>
-                <p>{pokeGenus}</p>
+                <p>No.{listDatas.id}</p>
+                <p>{listDatas.pokeGenus}</p>
               </div>
               <div>
-                <p>키 : {pokemonData.height / 10}m</p>
-                <p>무게 : {pokemonData.weight / 10}KG</p>
+                <p>키 : {listDatas.height / 10}m</p>
+                <p>무게 : {listDatas.weight / 10}KG</p>
               </div>
-              <p className="poke-main-detail__flavor">{pokeFlavor}</p>
+              <p className="poke-main-detail__flavor">{listDatas.pokeFlavor}</p>
             </div>
           </div>
         </div>
         <div className="poke-box type-stat">
           <p className="poke-title">포켓몬 능력치</p>
           <div className="poke-stat">
-            {pokemonData.stats.map((item: any, index: number) => {
+            {pokemonData.stats.map((item: pokeStatProps, index: number) => {
               const baseStatNames: { [key: string]: string } = {
                 hp: "HP",
                 attack: "공격",
