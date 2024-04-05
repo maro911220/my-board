@@ -6,12 +6,17 @@ import { motion } from "framer-motion";
 import ListItem from "./ListItem";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { SearcMainhProps } from "@/types/itemsType";
+import {
+  SearcMainProps,
+  SearcMainListProps,
+  searchTabProps,
+  SearcMainImgProps,
+} from "@/types/itemsType";
 import "swiper/css";
 
 const API_KEY = process.env.KAKAO;
 
-export default function Page({ title, setType }: SearcMainhProps) {
+export default function Page({ title, setType }: SearcMainProps) {
   // 검색어가 바뀌면 적용
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,7 +59,6 @@ export default function Page({ title, setType }: SearcMainhProps) {
     results[3].error
   )
     return "정보를 불러오는데 실패했습니다.";
-  console.log(results);
 
   return (
     <motion.article
@@ -62,7 +66,7 @@ export default function Page({ title, setType }: SearcMainhProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      {ids.map((item: any, index: number) => {
+      {ids.map((item: searchTabProps, index: number) => {
         return (
           // 이미지 제외 리스트
           <div className="search-list" key={index}>
@@ -70,7 +74,7 @@ export default function Page({ title, setType }: SearcMainhProps) {
             {item.type === "image" ? (
               <Swiper spaceBetween={4} slidesPerView={"auto"} loop={false}>
                 {results[index].data?.data.documents.map(
-                  (item: any, index: number) => {
+                  (item: SearcMainListProps, index: number) => {
                     return (
                       <SwiperSlide className="search-list-img" key={index}>
                         <a href={item.doc_url} target="_blank">
@@ -90,7 +94,7 @@ export default function Page({ title, setType }: SearcMainhProps) {
               </Swiper>
             ) : (
               results[index].data?.data.documents.map(
-                (item: any, index: number) => {
+                (item: SearcMainImgProps, index: number) => {
                   return <ListItem item={item} key={index} />;
                 }
               )

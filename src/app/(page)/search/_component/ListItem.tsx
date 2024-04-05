@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { SearcMainImgProps } from "@/types/itemsType";
 
-export default function ListItem({ item }: { item: any }) {
+export default function ListItem({ item }: { item: SearcMainImgProps }) {
   const replaceWord = /[<b\>{\}\[\]\/\\\=\(\'\"/&#39;]/g;
   const contents = item.contents?.replace(replaceWord, "");
   const title = item.title?.replace(replaceWord, "");

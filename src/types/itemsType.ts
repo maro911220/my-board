@@ -58,10 +58,71 @@ export interface timeDatasProps {
   day: string;
 }
 
-// (page)/search
-export interface SearcMainhProps {
+// (page)/medialist
+export interface geners {
+  id: number;
+  name: string;
+}
+
+export interface credits {
+  adult: boolean;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  order: number;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+}
+
+export interface subMediaList {
+  type: string;
   title: string;
-  setType: any;
+  tagline: string;
+  overview: string | null;
+  poster: string;
+  genres: geners[];
+  runtime: number;
+  release_date: string;
+  credits: credits[];
+  vote: number;
+}
+// (page)/search
+export interface searchTabProps {
+  type: string;
+  name: string;
+}
+
+export interface SearcMainProps {
+  title: string;
+  setType: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface SearcMainListProps {
+  collection: string;
+  datetime: string;
+  display_sitename: string;
+  doc_url: string;
+  height: number;
+  image_url: string;
+  thumbnail_url: string;
+  width: number;
+}
+
+export interface SearcMainImgProps {
+  cafename?: string;
+  blogname?: string;
+  contents: string;
+  datetime: string;
+  thumbnail: string;
+  thumbnail_url: string;
+  doc_url: string;
+  title: string;
+  url: string;
 }
 
 export interface SearchItemProps {

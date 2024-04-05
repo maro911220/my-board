@@ -1,6 +1,7 @@
 import Image from "next/image";
-
-export default function ListItem({ item }: { item: any }) {
+import { SearcMainImgProps } from "@/types/itemsType";
+export default function ListItem({ item }: { item: SearcMainImgProps }) {
+  console.log(item);
   return (
     item.thumbnail_url && (
       <a href={item.doc_url} target="_blank">

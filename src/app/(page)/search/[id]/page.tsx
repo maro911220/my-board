@@ -6,13 +6,13 @@ import SearchMain from "../_component/SearchMain";
 import { useEffect, useState } from "react";
 import Loading from "@/app/_component/Loading";
 import { AnimatePresence } from "framer-motion";
+import { searchTabProps } from "@/types/itemsType";
 
-export default function Page(props: any) {
-  const title = decodeURI(props.params.id);
+export default function Page({ params }: { params: { id: string } }) {
+  const title = decodeURI(params.id);
   const [load, setLoad] = useState(true);
   const [type, setType] = useState("main");
   const typeChange = (e: string) => setType(e);
-
   useEffect(() => {
     setTimeout(() => {
       setLoad(true);
@@ -32,7 +32,7 @@ export default function Page(props: any) {
     <section className="search-con" onClick={(e) => e.stopPropagation()}>
       <h2 className="hidden">검색 상세</h2>
       <div className="search-tab">
-        {tabList.map((item: any, index: number) => {
+        {tabList.map((item: searchTabProps, index: number) => {
           return (
             <button
               key={index}

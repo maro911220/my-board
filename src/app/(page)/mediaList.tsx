@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import "swiper/css";
 import "@/styles/page/mediaList.scss";
 import Image from "next/image";
+import { subMediaList } from "@/types/itemsType";
 
-export default function MediaList({ mediaData }: { mediaData: any }) {
+export default function MediaList({ mediaData }: { mediaData: subMediaList }) {
   return (
     <motion.section
       className="media-detail-item"
