@@ -46,10 +46,9 @@ export interface pokeStatProps {
 // _component/(home)/weather
 export interface dayDatasProps {
   dayWeather: string;
-  temp_min: number;
-  temp_max: number;
-  temp: number;
-  rain: number;
+  rain: any;
+  country: string;
+  temps: { name: string; value: number }[];
 }
 
 export interface timeDatasProps {

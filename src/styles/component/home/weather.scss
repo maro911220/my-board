@@ -1,142 +1,107 @@
 /* weather */
 .weather {
-  @apply flex flex-1 overflow-hidden;
+  @apply flex flex-1;
+  @apply overflow-hidden;
 
   // weather-title
   &-title {
-    @apply w-full text-base font-semibold mb-1;
+    @apply w-full mb-1;
+    @apply text-base font-semibold;
   }
 
   // weather-today
   &-today {
-    @apply flex-1 flex flex-col justify-center items-center overflow-hidden;
+    @apply overflow-hidden;
+    @apply flex flex-1 flex-col items-center;
 
     &-con {
-      @apply w-full flex-1 flex flex-wrap flex-row items-center justify-center gap-4;
+      @apply w-full;
+      @apply flex-1 flex flex-wrap flex-row items-center justify-center;
     }
 
     &-box {
-      @apply flex flex-none flex-col justify-center items-center gap-2;
+      @apply w-1/2 gap-8;
+      @apply flex flex-none flex-row justify-center items-center;
 
       &__con {
-        @apply flex justify-center gap-1;
+        @apply w-[260px] max-w-full gap-1;
+        @apply grid grid-cols-2 justify-center;
+      }
+
+      &__item {
+        @apply w-full;
+        @apply text-sm;
+        @apply flex p-4 rounded;
+        @apply bg-slate-100 dark:bg-stone-700;
+
+        span {
+          &:last-of-type {
+            @apply flex-1;
+            @apply text-center font-bold;
+          }
+        }
+      }
+      &__img {
+        @apply flex flex-none flex-col items-center;
+      }
+
+      &__country {
+        @apply text-2xl font-bold;
       }
     }
 
     &-img {
-      @apply flex-none w-[72px] mr-[12px];
-    }
-
-    &-name {
-      @apply text-lg block font-semibold text-center;
-    }
-
-    &-temp {
-      @apply font-bold text-4xl dark:drop-shadow-[0_0_3px_rgba(0,0,0,1)];
-      &__min,
-      &__max {
-        span {
-          @apply text-sm font-semibold text-blue-500;
-        }
-      }
-      &__max {
-        span {
-          @apply text-red-500;
-        }
-      }
-    }
-
-    &-rain {
-      span {
-        @apply ml-1 font-semibold text-sky-400;
-      }
+      @apply flex-none;
+      @apply w-[120px];
     }
   }
 
   // weather-time
   &-time {
-    @apply max-w-full flex flex-col justify-center items-center mb-[20px];
+    @apply max-w-full w-1/2;
+    @apply flex flex-col justify-center items-center;
+
+    &__con {
+      @apply w-full h-[180px] pb-[20px];
+    }
+
     canvas {
-      @apply flex-none h-[120px]  overflow-hidden;
+      @apply flex-none;
+      @apply overflow-hidden;
     }
     &__icon {
-      @apply w-full flex flex-none justify-between pl-4 pr-1;
-    }
-  }
-
-  // weather-week
-  &-week {
-    @apply pl-4 border-l flex flex-1 flex-col;
-    &-box {
-      @apply divide-y flex flex-1 flex-col;
-    }
-    &-item {
-      @apply flex px-2 py-1 justify-between items-center flex-1;
-    }
-    &-day {
-      @apply flex gap-4 items-center;
-    }
-    &-temp {
-      @apply flex gap-4;
-      p {
-        @apply w-[80px];
-        &:first-of-type {
-          span {
-            @apply font-semibold text-blue-500;
-          }
-        }
-        &:last-of-type {
-          @apply text-left;
-          span {
-            @apply font-semibold text-red-500;
-          }
-        }
-      }
+      @apply w-full pl-4 pr-1;
+      @apply flex flex-none justify-between;
     }
   }
 }
 
 /* media */
 @media (max-width: 999px) {
-  .weather {
-    @apply flex-col;
-    &-today {
-      @apply flex-none w-full;
-    }
-    &-week {
-      @apply flex-none w-full p-0 border-0 text-sm mt-[20px];
-      &-day {
-        @apply gap-2;
-      }
-      &-temp {
-        @apply gap-2;
-        p {
-          @apply w-[70px];
-        }
-      }
-      &-item {
-        @apply px-0 py-2;
-      }
+  .weather-today-box {
+    @apply w-full;
+  }
+  .weather-time {
+    @apply w-full mt-2;
+    &__con {
+      @apply bg-stone-700;
+      @apply rounded;
+      @apply max-w-[410px] py-4 px-2 pb-8;
     }
   }
 }
 
 @media (max-width: 500px) {
-  .weather-week {
-    @apply text-xs;
+  .weather-time {
+    @apply hidden;
+  }
+  .weather-today-box {
+    @apply flex-col;
+  }
+}
 
-    &-item {
-      @apply py-1;
-    }
-
-    &-day {
-      @apply gap-1;
-    }
-
-    &-temp {
-      p {
-        @apply flex flex-col w-[30px];
-      }
-    }
+@media (max-width: 300px) {
+  .weather-today-box__item {
+    @apply px-2 py-3 text-xs;
   }
 }
