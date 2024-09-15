@@ -43,6 +43,7 @@ export default function Charts({
   // 차트 옵션 설정
   const options: any = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       datalabels: {
         color: ticksColor,
