@@ -4,55 +4,71 @@ import axios from "axios";
 import { useGeolocation } from "@uidotdev/usehooks";
 import { useQueries } from "@tanstack/react-query";
 import { dayDatasProps, timeDatasProps } from "@/types/itemsType";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import Loading from "@/app/_component/Loading";
 import WeatherTime from "./_component/weatherTime";
 import WeatherToday from "./_component/weatherToday";
 
-// 환경 변수에서 API_KEY 가져오기
 const API_KEY = process.env.WEATHER;
 
-// Weather 컴포넌트 정의
 export default function Weather() {
   const [dayDatas, setDayDatas] = useState<dayDatasProps | null>(null);
   const [timeDatas, setTimeDatas] = useState<timeDatasProps[] | null>(null);
 
-  // 현재 위치 가져오기
+  const locationRef = useRef<{ lat: number; lon: number } | null>(null);
+
   const { latitude, longitude, error } = useGeolocation();
 
-  // API 호출을 위한 URL 설정
-  const urls = [
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`,
-    `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
-  ];
+  useEffect(() => {
+    if (latitude != null && longitude != null && !locationRef.current) {
+      locationRef.current = {
+        lat: Math.round(latitude * 10000) / 10000,
+        lon: Math.round(longitude * 10000) / 10000,
+      };
+    }
+  }, [latitude, longitude]);
 
-  // 날씨 데이터를 가져오기 위한 함수
-  const fetchWeather = useCallback(
-    async (url: any) => {
-      const response = await axios.get(url);
-      return response;
-    },
-    [latitude, longitude]
-  );
+  const fixedLat = locationRef.current?.lat;
+  const fixedLon = locationRef.current?.lon;
 
-  // API 호출 및 데이터 가져오기
+  const fetchWeather = useCallback(async (url: string) => {
+    const response = await axios.get(url);
+    return response;
+  }, []);
+
   const results = useQueries({
-    queries: urls?.map((url) => ({
-      queryKey: ["weather", url],
-      queryFn: () => fetchWeather(url),
-      staleTime: Infinity,
-      enabled: latitude != null,
-    })),
+    queries: [
+      {
+        queryKey: ["weather", "current", fixedLat, fixedLon],
+        queryFn: () =>
+          fetchWeather(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${fixedLat}&lon=${fixedLon}&exclude=alerts&appid=${API_KEY}&units=metric`
+          ),
+        staleTime: 1000 * 60 * 10,
+        enabled: fixedLat != null && fixedLon != null,
+      },
+      {
+        queryKey: ["weather", "forecast", fixedLat, fixedLon],
+        queryFn: () =>
+          fetchWeather(
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${fixedLat}&lon=${fixedLon}&appid=${API_KEY}&units=metric`
+          ),
+        staleTime: 1000 * 60 * 10,
+        enabled: fixedLat != null && fixedLon != null,
+      },
+    ],
   });
 
-  // 기존 데이터 저장 방식을 변경.
   useEffect(() => {
-    if (!results[0].isPending && !results[1].isPending) {
+    if (
+      !results[0].isPending &&
+      !results[1].isPending &&
+      results[0].data &&
+      results[1].data
+    ) {
       const weatherDay = results[0].data?.data;
       const weatherTime = results[1].data?.data;
-      console.log(weatherDay.sys.country);
-      // 레이아웃 변경으로 데이터 추가 예정
-      // day
+
       const dayData = {
         dayWeather: weatherDay.weather[0].main,
         rain: weatherDay.rain,
@@ -65,27 +81,21 @@ export default function Weather() {
         ],
       };
 
-      // time
-      const fitTimeList = weatherTime.list.slice(3).slice(0, 10);
-      const timeData = [
-        ...fitTimeList.map((item: any) => {
-          return {
-            dayWeather: item.weather[0].main,
-            temp: item.main.temp,
-            day: item.dt_txt,
-          };
-        }),
-      ];
+      const fitTimeList = weatherTime.list.slice(3, 13);
+      const timeData = fitTimeList.map((item: any) => ({
+        dayWeather: item.weather[0].main,
+        temp: item.main.temp,
+        day: item.dt_txt,
+      }));
 
       setDayDatas(dayData);
       setTimeDatas(timeData);
     }
-  }, [results[0].isPending, results[1].isPending]);
+  }, [results[0].data, results[1].data]);
 
-  // 위치 정보 에러
   if (error) return <p>위치동의가 필요합니다.</p>;
-  // 데이터 로딩중
-  if (results[0].isLoading || results[1].isLoading) return <Loading />;
+  if (results[0].isLoading || results[1].isLoading || !dayDatas || !timeDatas)
+    return <Loading />;
 
   return (
     <>

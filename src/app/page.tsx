@@ -46,7 +46,7 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="main">
+    <main className={`main ${edit ? "editmode" : ""}`}>
       <h1 className="hidden">Main</h1>
       {/* React Query */}
       <QueryClientProvider client={queryClient}>

@@ -76,6 +76,13 @@
   }
 }
 
+/* edit mode  */
+.main.editmode {
+  .list-grid-item {
+    @apply opacity-0;
+  }
+}
+
 /* Loading */
 .loading {
   @apply absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center text-2xl;
