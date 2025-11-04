@@ -62,7 +62,7 @@
     @apply flex flex-col justify-center items-center;
 
     &__con {
-      @apply w-full h-[180px] pb-[20px];
+      @apply w-full h-[180px] pb-[28px];
     }
 
     canvas {
@@ -89,7 +89,7 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 699px) {
   .weather-time,
   .weather-today-box {
     @apply w-full;
@@ -99,7 +99,25 @@
   }
 }
 
+@media (max-width: 500px) {
+  .weather-time,
+  .weather-today-box {
+    @apply w-full;
+  }
+
+  .weather-today-box {
+    @apply flex-col;
+  }
+
+  .weather-time__con {
+    @apply p-0;
+  }
+}
+
 @media (max-width: 300px) {
+  .weather-time {
+    @apply hidden;
+  }
   .weather-today-box__item {
     @apply px-2 py-3 text-xs;
   }
