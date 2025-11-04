@@ -31,7 +31,7 @@ export default function Weather() {
   const fixedLat = locationRef.current?.lat;
   const fixedLon = locationRef.current?.lon;
 
-  // WeatherAPI.com - 한 번의 호출로 현재 날씨 + 예보 모두 가져옴
+  // WeatherAPI.com
   const { data, isLoading, isPending } = useQuery({
     queryKey: ["weather", fixedLat, fixedLon],
     queryFn: async () => {
@@ -54,7 +54,7 @@ export default function Weather() {
 
       // 오늘 날씨 데이터
       const dayData: dayDatasProps = {
-        dayWeather: current.condition.text, // 날씨 상태 (한글)
+        dayWeather: current.condition.text,
         rain: current.precip_mm > 0 ? { "1h": current.precip_mm } : undefined,
         country: data.location.country,
         temps: [
@@ -65,20 +65,21 @@ export default function Weather() {
         ],
       };
 
-      // 현재 시간 이후 10개의 시간별 예보 (3시간 간격)
-      const currentHour = new Date().getHours();
-      const filteredHourly = hourly
-        .filter((item: any) => {
-          const hour = new Date(item.time).getHours();
-          return hour >= currentHour;
-        })
+      // 오늘 + 내일 시간별 예보 데이터 합치기
+      const tomorrow = data.forecast.forecastday[1];
+      const allHourly = [...hourly, ...(tomorrow?.hour || [])];
+
+      // 현재 시간 이후 30개 추출
+      const currentTime = new Date().getTime();
+      const filteredHourly = allHourly
+        .filter((item: any) => new Date(item.time).getTime() > currentTime)
         .filter((_: any, index: number) => index % 3 === 0) // 3시간 간격
-        .slice(0, 10);
+        .slice(0, 8);
 
       const timeData: timeDatasProps[] = filteredHourly.map((item: any) => ({
         dayWeather: item.condition.text,
         temp: Math.round(item.temp_c * 10) / 10,
-        day: item.time.split(" ")[1].slice(0, 2) + "시", // "15:00" → "15시"
+        day: item.time.split(" ")[1].slice(0, 2) + "시",
       }));
 
       setDayDatas(dayData);
