@@ -52,7 +52,7 @@
 
     &-img {
       @apply flex-none;
-      @apply w-[120px];
+      @apply w-[80px] mb-4;
     }
   }
 
@@ -79,12 +79,10 @@
 /* media */
 @media (max-width: 999px) {
   .weather-today-box {
-    @apply w-full;
+    @apply flex-wrap;
   }
   .weather-time {
-    @apply w-full mt-2;
     &__con {
-      @apply bg-stone-700;
       @apply rounded;
       @apply max-w-[410px] py-4 px-2 pb-8;
     }
@@ -92,8 +90,9 @@
 }
 
 @media (max-width: 500px) {
-  .weather-time {
-    @apply hidden;
+  .weather-time,
+  .weather-today-box {
+    @apply w-full;
   }
   .weather-today-box {
     @apply flex-col;

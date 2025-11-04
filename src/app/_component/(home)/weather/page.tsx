@@ -2,9 +2,9 @@
 import "@/styles/component/home/weather.scss";
 import axios from "axios";
 import { useGeolocation } from "@uidotdev/usehooks";
-import { useQueries } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { dayDatasProps, timeDatasProps } from "@/types/itemsType";
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Loading from "@/app/_component/Loading";
 import WeatherTime from "./_component/weatherTime";
 import WeatherToday from "./_component/weatherToday";
@@ -31,71 +31,63 @@ export default function Weather() {
   const fixedLat = locationRef.current?.lat;
   const fixedLon = locationRef.current?.lon;
 
-  const fetchWeather = useCallback(async (url: string) => {
-    const response = await axios.get(url);
-    return response;
-  }, []);
-
-  const results = useQueries({
-    queries: [
-      {
-        queryKey: ["weather", "current", fixedLat, fixedLon],
-        queryFn: () =>
-          fetchWeather(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${fixedLat}&lon=${fixedLon}&exclude=alerts&appid=${API_KEY}&units=metric`
-          ),
-        staleTime: 1000 * 60 * 10,
-        enabled: fixedLat != null && fixedLon != null,
-      },
-      {
-        queryKey: ["weather", "forecast", fixedLat, fixedLon],
-        queryFn: () =>
-          fetchWeather(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${fixedLat}&lon=${fixedLon}&appid=${API_KEY}&units=metric`
-          ),
-        staleTime: 1000 * 60 * 10,
-        enabled: fixedLat != null && fixedLon != null,
-      },
-    ],
+  // WeatherAPI.com - 한 번의 호출로 현재 날씨 + 예보 모두 가져옴
+  const { data, isLoading, isPending } = useQuery({
+    queryKey: ["weather", fixedLat, fixedLon],
+    queryFn: async () => {
+      const response = await axios.get(
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${fixedLat},${fixedLon}&days=2&aqi=no&alerts=no`
+      );
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 10, // 10분
+    enabled: fixedLat != null && fixedLon != null,
   });
 
   useEffect(() => {
-    if (
-      !results[0].isPending &&
-      !results[1].isPending &&
-      results[0].data &&
-      results[1].data
-    ) {
-      const weatherDay = results[0].data?.data;
-      const weatherTime = results[1].data?.data;
+    if (data) {
+      console.log("WeatherAPI 응답:", data);
 
-      const dayData = {
-        dayWeather: weatherDay.weather[0].main,
-        rain: weatherDay.rain,
-        country: weatherDay.sys.country,
+      const current = data.current;
+      const today = data.forecast.forecastday[0];
+      const hourly = data.forecast.forecastday[0].hour;
+
+      // 오늘 날씨 데이터
+      const dayData: dayDatasProps = {
+        dayWeather: current.condition.text, // 날씨 상태 (한글)
+        rain: current.precip_mm > 0 ? { "1h": current.precip_mm } : undefined,
+        country: data.location.country,
         temps: [
-          { name: "평균", value: weatherDay.main.temp },
-          { name: "체감", value: weatherDay.main.feels_like },
-          { name: "최저", value: weatherDay.main.temp_min },
-          { name: "최고", value: weatherDay.main.temp_max },
+          { name: "평균", value: Math.round(today.day.avgtemp_c * 10) / 10 },
+          { name: "체감", value: Math.round(current.feelslike_c * 10) / 10 },
+          { name: "최저", value: Math.round(today.day.mintemp_c * 10) / 10 },
+          { name: "최고", value: Math.round(today.day.maxtemp_c * 10) / 10 },
         ],
       };
 
-      const fitTimeList = weatherTime.list.slice(3, 13);
-      const timeData = fitTimeList.map((item: any) => ({
-        dayWeather: item.weather[0].main,
-        temp: item.main.temp,
-        day: item.dt_txt,
+      // 현재 시간 이후 10개의 시간별 예보 (3시간 간격)
+      const currentHour = new Date().getHours();
+      const filteredHourly = hourly
+        .filter((item: any) => {
+          const hour = new Date(item.time).getHours();
+          return hour >= currentHour;
+        })
+        .filter((_: any, index: number) => index % 3 === 0) // 3시간 간격
+        .slice(0, 10);
+
+      const timeData: timeDatasProps[] = filteredHourly.map((item: any) => ({
+        dayWeather: item.condition.text,
+        temp: Math.round(item.temp_c * 10) / 10,
+        day: item.time.split(" ")[1].slice(0, 2) + "시", // "15:00" → "15시"
       }));
 
       setDayDatas(dayData);
       setTimeDatas(timeData);
     }
-  }, [results[0].data, results[1].data]);
+  }, [data]);
 
   if (error) return <p>위치동의가 필요합니다.</p>;
-  if (results[0].isLoading || results[1].isLoading || !dayDatas || !timeDatas)
-    return <Loading />;
+  if (isLoading || isPending || !dayDatas || !timeDatas) return <Loading />;
 
   return (
     <>
